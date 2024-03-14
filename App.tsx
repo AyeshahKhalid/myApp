@@ -14,7 +14,8 @@ const App = () => {
       <ChildApp name='Farheen' />
       {/* <CreateForms /> */}
       {/* <MyFlatList /> */}
-      <ListMap />
+      {/* <ListMap /> */}
+      <MyGrid />
     </View>
   )
 }
@@ -115,14 +116,30 @@ const ListMap = () => {
   return (
     <View>
       <ScrollView>
-      {
-        users.map((item, index) => 
-          <Text style={styles.flatList}>{index+1}.{item.name}</Text>
-        )
-      }
+        {
+          users.map((item, index) =>
+            <Text style={styles.flatList}>{index + 1}.{item.name}</Text>
+          )
+        }
       </ScrollView>
     </View>
   );
+}
+
+//Make Grid using flex
+const MyGrid = () => {
+  const colors = ['red', 'blue', 'yellow', 'green', 'gray', 'pink', 'brown', 'purple', 'white', 'black', 'orange']
+  return (
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+      <Text style={styles.gridbox}>Sam</Text>
+      <Text>Sam</Text>
+      <Text>Sam</Text>
+      <Text>Sam</Text>
+      <Text>Sam</Text>
+      <Text>Sam</Text>
+      {colors.map((color)=><Text style={[{backgroundColor:color},styles.gridbox]}>{color}</Text>)}
+    </View>
+  )
 }
 const styles = StyleSheet.create({
   textBox: {
@@ -139,6 +156,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'gray',
     margin: 15,
     padding: 10
+  }
+  , gridbox: {
+    width: 80,
+    height: 80,
+    borderWidth: 1,
+    // backgroundColor: 'red',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    margin: 5
   }
 })
 export default App;
