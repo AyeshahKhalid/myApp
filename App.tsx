@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Text, View, StyleSheet, TextInput, FlatList } from 'react-native'
+import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView } from 'react-native'
 
 const App = () => {
   const [name, setName] = useState("Ayesha");
@@ -13,7 +13,8 @@ const App = () => {
       <Button title='send' onPress={changeName} color={'green'} />
       <ChildApp name='Farheen' />
       {/* <CreateForms /> */}
-      <MyFlatList />
+      {/* <MyFlatList /> */}
+      <ListMap />
     </View>
   )
 }
@@ -81,17 +82,48 @@ const MyFlatList = () => {
     }
   ]
   return (
-<View>
-  <FlatList
-  
-  data={users}
-  renderItem={({item})=><Text style={styles.flatList}>{item.name}</Text>}
-  keyExtractor={item=>item.id}
-  />
-</View>
+    <View>
+      <FlatList
+
+        data={users}
+        renderItem={({ item }) => <Text style={styles.flatList}>{item.name}</Text>}
+        keyExtractor={item => item.id}
+      />
+    </View>
   );
 }
-
+//list with map funtion
+const ListMap = () => {
+  const users = [
+    {
+      id: 1,
+      name: "ayesha"
+    },
+    {
+      id: 2,
+      name: "sana"
+    },
+    {
+      id: 3,
+      name: "maheem"
+    },
+    {
+      id: 4,
+      name: "laraib"
+    }
+  ]
+  return (
+    <View>
+      <ScrollView>
+      {
+        users.map((item, index) => 
+          <Text style={styles.flatList}>{index+1}.{item.name}</Text>
+        )
+      }
+      </ScrollView>
+    </View>
+  );
+}
 const styles = StyleSheet.create({
   textBox: {
     color: 'red'
@@ -102,11 +134,11 @@ const styles = StyleSheet.create({
     margin: 15,
     padding: 10
   },
-  flatList:{
-    fontSize:15,
-    backgroundColor:'gray',
-    margin:15,
-    padding:10
+  flatList: {
+    fontSize: 15,
+    backgroundColor: 'gray',
+    margin: 15,
+    padding: 10
   }
 })
 export default App;
