@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView } from 'react-native'
-
+import Animal from './components/Animal';
 const App = () => {
   const [name, setName] = useState("Ayesha");
   function changeName() {
@@ -15,7 +15,8 @@ const App = () => {
       {/* <CreateForms /> */}
       {/* <MyFlatList /> */}
       {/* <ListMap /> */}
-      <MyGrid />
+      {/* <MyGrid /> */}
+      <Forest/>
     </View>
   )
 }
@@ -141,6 +142,34 @@ const MyGrid = () => {
     </View>
   )
 }
+
+
+//component in loop with flatlist
+
+// const Animal=(props)=>{
+//   return(
+//     <View><Text style={styles.gridbox}>{props.name}</Text></View>
+//   );
+// }
+const Forest=()=>{
+  const animalName=[
+    {id:1,name:'lion'},
+    {id:2,name:'snake'},
+    {id:3,name:'monkey'},
+    {id:4,name:'elephant'},
+  ]
+ return(
+  <View>
+    <FlatList 
+    data={animalName}
+    renderItem={({item})=> <Animal name={item.name} />}
+    keyExtractor={item=>item.id}
+    />
+   
+  </View>
+ );
+}
+
 const styles = StyleSheet.create({
   textBox: {
     color: 'red'
