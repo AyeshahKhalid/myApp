@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView } from 'react-native'
+import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView, SectionList } from 'react-native'
 import Animal from './components/Animal';
 const App = () => {
   const [name, setName] = useState("Ayesha");
@@ -16,7 +16,8 @@ const App = () => {
       {/* <MyFlatList /> */}
       {/* <ListMap /> */}
       {/* <MyGrid /> */}
-      <Forest/>
+      {/* <Forest/> */}
+      <MySectionList/> 
     </View>
   )
 }
@@ -168,6 +169,23 @@ const Forest=()=>{
    
   </View>
  );
+}
+
+//section list in react native
+const MySectionList=()=>{
+  const question=[
+    {id:1,name:'what is john age?',data:[1,2,3,4]},//data name is necessary for nested array
+    {id:2,name:'what is sam age?',data:[5,6,7,8]},
+    {id:3,name:'what is lara age?',data:[9,0,1,2]},
+    {id:4,name:'what is diana age?',data:[6,3,9,6]},
+  ]
+  return(
+    <SectionList
+    sections={question}
+    renderItem={({item,index})=><Text>{item}</Text>}
+    renderSectionHeader={({section:{name}})=>(<Text>{name}</Text>)}
+    />
+  );
 }
 
 const styles = StyleSheet.create({
