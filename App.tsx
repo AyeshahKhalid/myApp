@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
 import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView, SectionList } from 'react-native'
 import Animal from './components/Animal';
-const App = () => {
+import Student from './components/Student';
+
+const Appsa = () => {
   const [name, setName] = useState("Ayesha");
   function changeName() {
     setName('namse')
@@ -17,7 +19,8 @@ const App = () => {
       {/* <ListMap /> */}
       {/* <MyGrid /> */}
       {/* <Forest/> */}
-      <MySectionList/> 
+      {/* <MySectionList/>  */}
+     
     </View>
   )
 }
@@ -187,6 +190,25 @@ const MySectionList=()=>{
     />
   );
 }
+
+
+//class component
+class App extends Component{
+  fruit =()=>{
+    console.warn("this is class componet function syntax")
+  }
+  render(){
+    return(
+      <View>
+        <Text>Hello this class A </Text>
+        <Button title="send" onPress={this.fruit}></Button>
+        <Student/>
+
+      </View>
+    )
+  }
+}
+
 
 const styles = StyleSheet.create({
   textBox: {
