@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Text, View, StyleSheet, TextInput,Icon } from 'react-native'
+import { Button, Text, View, StyleSheet, TextInput, FlatList } from 'react-native'
 
 const App = () => {
   const [name, setName] = useState("Ayesha");
@@ -12,7 +12,8 @@ const App = () => {
       <Text style={{ color: 'blue', fontSize: 40 }}>Hello {name}</Text>
       <Button title='send' onPress={changeName} color={'green'} />
       <ChildApp name='Farheen' />
-      <CreateForms />
+      {/* <CreateForms /> */}
+      <MyFlatList />
     </View>
   )
 }
@@ -44,20 +45,51 @@ const CreateForms = () => {
       <TextInput style={styles.inputField} placeholder='Enter your Number' value={number} onChangeText={(text) => setNumber(text)}></TextInput>
       <Button title='submit Data' color={'red'} onPress={() => setIsSubmit(true)}></Button>
       <Button title='icon' color='green' onPress={() => setSecurity(!isSecure)}></Button>
-      
+
       {
         isSubmit ?
-        <View>
-      <Text>Your name is  {name}</Text>
-      <Text>Your age is {age}</Text>
-      <Text>Your number is {number}</Text>
-      </View>
+          <View>
+            <Text>Your name is  {name}</Text>
+            <Text>Your age is {age}</Text>
+            <Text>Your number is {number}</Text>
+          </View>
           :
-          ''
+          null
       }
 
     </View>
   )
+}
+
+const MyFlatList = () => {
+  const users = [
+    {
+      id: 1,
+      name: "ayesha"
+    },
+    {
+      id: 2,
+      name: "sana"
+    },
+    {
+      id: 3,
+      name: "maheem"
+    },
+    {
+      id: 4,
+      name: "laraib"
+    }
+  ]
+  return (
+<View>
+  <FlatList
+  
+  data={users}
+  renderItem={({item})=><Text style={styles.flatList}>{item.name}</Text>}
+  keyExtractor={item=>item.id}
+  />
+</View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -67,8 +99,14 @@ const styles = StyleSheet.create({
   inputField: {
     borderWidth: 1,
     fontSize: 15,
-    margin: 10,
+    margin: 15,
     padding: 10
+  },
+  flatList:{
+    fontSize:15,
+    backgroundColor:'gray',
+    margin:15,
+    padding:10
   }
 })
 export default App;
