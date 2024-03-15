@@ -225,9 +225,10 @@ class Appss extends Component{
 const UseHook=()=>{
   const [count,setCount]=useState(1)
   useEffect(()=>{
-    console.warn(" use effect hook hello",count)
-  },[])//use effect as component didmount 
-  
+    console.warn("228: use effect hook hello",count)
+  },[count])
+  //use effect as component didmount []
+  //USE effect as component didupdate means when specific prop update [state]
   return(
     <View>
       <Text>Hi it count increasing {count}</Text>
