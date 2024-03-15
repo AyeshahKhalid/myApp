@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView, SectionList } from 'react-native'
+import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView, SectionList, TouchableHighlight } from 'react-native'
 import Animal from './components/Animal';
 import Student from './components/Student';
 
@@ -21,7 +21,8 @@ const App = () => {
       {/* <Forest/> */}
       {/* <MySectionList/>  */}
       {/* <UseHook/> */}
-      <MyFlexBox />
+      {/* <MyFlexBox /> */}
+      <MyTouchableHighlight />
     </View>
   )
 }
@@ -251,7 +252,7 @@ const UseHook = () => {
 const MyFlexBox = () => {
   return (
     <View style={{ backgroundColor: 'green', flex: 1, flexDirection: 'row' }}>
-      <View style={{ backgroundColor: 'red', flex: 1, padding:10 }}>
+      <View style={{ backgroundColor: 'red', flex: 1, padding: 10 }}>
         <View style={{ backgroundColor: 'pink', flex: 1 }}></View>
         <View style={{ backgroundColor: 'green', flex: 1 }}></View>
 
@@ -263,6 +264,17 @@ const MyFlexBox = () => {
     </View>
   );
 }
+//create custome buttom with touchablehighlight
+const MyTouchableHighlight = () => {
+  return (
+    <View>
+      <TouchableHighlight>
+        <Text style={styles.warn}>Warning</Text>
+      </TouchableHighlight>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   textBox: {
     color: 'red'
@@ -287,6 +299,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     margin: 5
+  },
+  warn: {
+    backgroundColor: "red",
+    textAlign: "center",
+    padding: 10,
+    margin: 10,
+    borderRadius: 5,
+    color: "white",
+    fontSize: 20,
+    elevation: 20,
+    shadowColor: "black",
+    shadowOpacity: 1
   }
 })
 export default App;
