@@ -192,17 +192,27 @@ const MySectionList=()=>{
 }
 
 
-//class component
+//1. class component
+//w. state and props in classs component
+
 class App extends Component{
+  constructor(){
+    super();
+    this.state={
+      name:'ayesha',
+    }
+  }
+  
   fruit =()=>{
     console.warn("this is class componet function syntax")
+    this.setState({name:'sana'})
   }
   render(){
     return(
       <View>
-        <Text>Hello this class A </Text>
+        <Text>Hello this class A {this.state.name}</Text>
         <Button title="send" onPress={this.fruit}></Button>
-        <Student/>
+        <Student name={this.state.name}/>
 
       </View>
     )

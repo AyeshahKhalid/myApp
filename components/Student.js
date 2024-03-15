@@ -5,7 +5,7 @@ class Student extends Component {
   render() {
     return (
       <View>
-        <Text>Hello this Student class</Text>
+        <Text>Hello this Student class {this.props.name}</Text>
       </View>
     )
   }
