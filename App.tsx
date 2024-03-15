@@ -177,6 +177,9 @@ const Forest=()=>{
 
 //section list in react native
 const MySectionList=()=>{
+  useEffect(()=>{
+    return ()=> {console.warn("232: call on unmount")} //call on unmount when component hide
+  })
   const question=[
     {id:1,name:'what is john age?',data:[1,2,3,4]},//data name is necessary for nested array
     {id:2,name:'what is sam age?',data:[5,6,7,8]},
@@ -224,15 +227,21 @@ class Appss extends Component{
 //use Effeck hook
 const UseHook=()=>{
   const [count,setCount]=useState(1)
-  useEffect(()=>{
-    console.warn("228: use effect hook hello",count)
-  },[count])
+  const [isDisplay,setDisplay]=useState(false)
+  // useEffect(()=>{
+  //   console.warn("229: use effect hook hello",count)
+  // })
+ 
   //use effect as component didmount []
   //USE effect as component didupdate means when specific prop update [state]
+  //use effect with unmount life cycle
   return(
     <View>
+      
       <Text>Hi it count increasing {count}</Text>
       <Button title="+" onPress={()=>setCount(count+1)}></Button>
+      <Button title="Display MySectionlist component" color='red' onPress={()=>setDisplay(!isDisplay)}></Button>
+      {isDisplay?<MySectionList/>:null}
     </View>
   );
 }
