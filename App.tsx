@@ -10,18 +10,18 @@ const App = () => {
   }
 
   return (
-    <View>
-      <Text style={{ color: 'blue', fontSize: 40 }}>Hello {name}</Text>
+    <View style={{ flex: 1 }}>
+      {/* <Text style={{ color: 'blue', fontSize: 40 }}>Hello {name}</Text>
       <Button title='send' onPress={changeName} color={'green'} />
-      <ChildApp name='Farheen' />
+      <ChildApp name='Farheen' /> */}
       {/* <CreateForms /> */}
       {/* <MyFlatList /> */}
       {/* <ListMap /> */}
       {/* <MyGrid /> */}
       {/* <Forest/> */}
       {/* <MySectionList/>  */}
-      <UseHook/>
-     
+      {/* <UseHook/> */}
+      <MyFlexBox />
     </View>
   )
 }
@@ -143,7 +143,7 @@ const MyGrid = () => {
       <Text>Sam</Text>
       <Text>Sam</Text>
       <Text>Sam</Text>
-      {colors.map((color)=><Text style={[{backgroundColor:color},styles.gridbox]}>{color}</Text>)}
+      {colors.map((color) => <Text style={[{ backgroundColor: color }, styles.gridbox]}>{color}</Text>)}
     </View>
   )
 }
@@ -156,41 +156,41 @@ const MyGrid = () => {
 //     <View><Text style={styles.gridbox}>{props.name}</Text></View>
 //   );
 // }
-const Forest=()=>{
-  const animalName=[
-    {id:1,name:'lion'},
-    {id:2,name:'snake'},
-    {id:3,name:'monkey'},
-    {id:4,name:'elephant'},
+const Forest = () => {
+  const animalName = [
+    { id: 1, name: 'lion' },
+    { id: 2, name: 'snake' },
+    { id: 3, name: 'monkey' },
+    { id: 4, name: 'elephant' },
   ]
- return(
-  <View>
-    <FlatList 
-    data={animalName}
-    renderItem={({item})=> <Animal name={item.name} />}
-    keyExtractor={item=>item.id}
-    />
-   
-  </View>
- );
+  return (
+    <View>
+      <FlatList
+        data={animalName}
+        renderItem={({ item }) => <Animal name={item.name} />}
+        keyExtractor={item => item.id}
+      />
+
+    </View>
+  );
 }
 
 //section list in react native
-const MySectionList=()=>{
-  useEffect(()=>{
-    return ()=> {console.warn("232: call on unmount")} //call on unmount when component hide
-  })
-  const question=[
-    {id:1,name:'what is john age?',data:[1,2,3,4]},//data name is necessary for nested array
-    {id:2,name:'what is sam age?',data:[5,6,7,8]},
-    {id:3,name:'what is lara age?',data:[9,0,1,2]},
-    {id:4,name:'what is diana age?',data:[6,3,9,6]},
+const MySectionList = () => {
+  // useEffect(()=>{
+  //   return ()=> {console.warn("232: call on unmount")} //call on unmount when component hide
+  // })
+  const question = [
+    { id: 1, name: 'what is john age?', data: [1, 2, 3, 4] },//data name is necessary for nested array
+    { id: 2, name: 'what is sam age?', data: [5, 6, 7, 8] },
+    { id: 3, name: 'what is lara age?', data: [9, 0, 1, 2] },
+    { id: 4, name: 'what is diana age?', data: [6, 3, 9, 6] },
   ]
-  return(
+  return (
     <SectionList
-    sections={question}
-    renderItem={({item,index})=><Text>{item}</Text>}
-    renderSectionHeader={({section:{name}})=>(<Text>{name}</Text>)}
+      sections={question}
+      renderItem={({ item, index }) => <Text>{item}</Text>}
+      renderSectionHeader={({ section: { name } }) => (<Text>{name}</Text>)}
     />
   );
 }
@@ -199,24 +199,24 @@ const MySectionList=()=>{
 //1. class component
 //2. state and props in classs component
 
-class Appss extends Component{
-  constructor(){
+class Appss extends Component {
+  constructor() {
     super();
-    this.state={
-      name:'ayesha',
+    this.state = {
+      name: 'ayesha',
     }
   }
-  
-  fruit =()=>{
+
+  fruit = () => {
     console.warn("this is class componet function syntax")
-    this.setState({name:'sana'})
+    this.setState({ name: 'sana' })
   }
-  render(){
-    return(
+  render() {
+    return (
       <View>
         <Text>Hello this class A {this.state.name}</Text>
         <Button title="send" onPress={this.fruit}></Button>
-        <Student name={this.state.name}/>
+        <Student name={this.state.name} />
 
       </View>
     )
@@ -225,23 +225,41 @@ class Appss extends Component{
 
 //react native life cycle methid 
 //use Effeck hook
-const UseHook=()=>{
-  const [count,setCount]=useState(1)
-  const [isDisplay,setDisplay]=useState(false)
+const UseHook = () => {
+  const [count, setCount] = useState(1)
+  const [isDisplay, setDisplay] = useState(false)
   // useEffect(()=>{
   //   console.warn("229: use effect hook hello",count)
   // })
- 
+
   //use effect as component didmount []
   //USE effect as component didupdate means when specific prop update [state]
   //use effect with unmount life cycle
-  return(
+  return (
     <View>
-      
+
       <Text>Hi it count increasing {count}</Text>
-      <Button title="+" onPress={()=>setCount(count+1)}></Button>
-      <Button title="Display MySectionlist component" color='red' onPress={()=>setDisplay(!isDisplay)}></Button>
-      {isDisplay?<MySectionList/>:null}
+      <Button title="+" onPress={() => setCount(count + 1)}></Button>
+      <Button title="Display MySectionlist component" color='red' onPress={() => setDisplay(!isDisplay)}></Button>
+      {isDisplay ? <MySectionList /> : null}
+    </View>
+  );
+}
+
+
+//Responsive Layout with Flexbox
+const MyFlexBox = () => {
+  return (
+    <View style={{ backgroundColor: 'green', flex: 1, flexDirection: 'row' }}>
+      <View style={{ backgroundColor: 'red', flex: 1, padding:10 }}>
+        <View style={{ backgroundColor: 'pink', flex: 1 }}></View>
+        <View style={{ backgroundColor: 'green', flex: 1 }}></View>
+
+      </View>
+
+      <View style={{ backgroundColor: 'purple', flex: 1 }}></View>
+      <View style={{ backgroundColor: 'yellow', flex: 1 }}></View>
+      <View style={{ backgroundColor: 'blue', flex: 1 }}></View>
     </View>
   );
 }
