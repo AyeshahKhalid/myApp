@@ -226,7 +226,8 @@ const UseHook=()=>{
   const [count,setCount]=useState(1)
   useEffect(()=>{
     console.warn(" use effect hook hello",count)
-  })
+  },[])//use effect as component didmount 
+  
   return(
     <View>
       <Text>Hi it count increasing {count}</Text>
