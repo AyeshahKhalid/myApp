@@ -1,9 +1,9 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView, SectionList } from 'react-native'
 import Animal from './components/Animal';
 import Student from './components/Student';
 
-const Appsa = () => {
+const App = () => {
   const [name, setName] = useState("Ayesha");
   function changeName() {
     setName('namse')
@@ -20,6 +20,7 @@ const Appsa = () => {
       {/* <MyGrid /> */}
       {/* <Forest/> */}
       {/* <MySectionList/>  */}
+      <UseHook/>
      
     </View>
   )
@@ -193,9 +194,9 @@ const MySectionList=()=>{
 
 
 //1. class component
-//w. state and props in classs component
+//2. state and props in classs component
 
-class App extends Component{
+class Appss extends Component{
   constructor(){
     super();
     this.state={
@@ -219,7 +220,20 @@ class App extends Component{
   }
 }
 
-
+//react native life cycle methid 
+//use Effeck hook
+const UseHook=()=>{
+  const [count,setCount]=useState(1)
+  useEffect(()=>{
+    console.warn(" use effect hook hello",count)
+  })
+  return(
+    <View>
+      <Text>Hi it count increasing {count}</Text>
+      <Button title="+" onPress={()=>setCount(count+1)}></Button>
+    </View>
+  );
+}
 const styles = StyleSheet.create({
   textBox: {
     color: 'red'
