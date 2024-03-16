@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView, SectionList, TouchableHighlight } from 'react-native'
+import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView, SectionList, TouchableHighlight, TouchableOpacity } from 'react-native'
 import Animal from './components/Animal';
 import Student from './components/Student';
 
@@ -275,6 +275,30 @@ const MyTouchableHighlight = () => {
   );
 }
 
+//Create radio button with touchable opacity
+const MyTouchableOpacity = () => {
+  const [isSelected, setSelected] = useState(1)
+  return (
+    <View>
+      <TouchableOpacity onPress={()=>setSelected(1)}>
+        <View>
+          {isSelected === 1 ?
+            <View></View> : null
+          }
+        </View>
+        <Text>Radio 1</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=>setSelected(2)}>
+        <View>
+          {isSelected === 2 ?
+            <View></View> : null
+          }
+        </View>
+        <Text>Radio 1</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
 const styles = StyleSheet.create({
   textBox: {
     color: 'red'
