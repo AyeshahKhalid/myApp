@@ -8,7 +8,13 @@ const App = () => {
   function changeName() {
     setName('namse')
   }
-
+  const radioBtn=[
+    {id:1,name:"Javascript"},
+    {id:2,name:"React"},
+    {id:3,name:"Angular"},
+    {id:4,name:"Vue"},
+    {id:5,name:"Flutter"},
+  ]
   return (
     <View style={{ flex: 1 }}>
       {/* <Text style={{ color: 'blue', fontSize: 40 }}>Hello {name}</Text>
@@ -23,7 +29,8 @@ const App = () => {
       {/* <UseHook/> */}
       {/* <MyFlexBox /> */}
       {/* <MyTouchableHighlight />*/}
-      <MyTouchableOpacity />
+      {/* <MyTouchableOpacity /> */}
+      <DynamicRadioBtn radio={radioBtn}/>
     </View>
   )
 }
@@ -301,6 +308,34 @@ const MyTouchableOpacity = () => {
           <Text style={styles.radioBtnText}>Radio 2</Text>
         </View>
       </TouchableOpacity>
+      {/* loader */}
+      <ActivityIndicator size={200} color="red" animating={false}></ActivityIndicator>
+    </View>
+  );
+}
+
+//create dynamic radio button
+const DynamicRadioBtn = (props) => {
+  const [isSelected, setSelected] = useState(props.radio[0].id)
+  return (
+    <View style={styles.main}>
+      <FlatList
+        data={props.radio}
+        renderItem={({item})=>
+        <TouchableOpacity onPress={() => setSelected(item.id)}>
+        <View style={styles.radioBtnWrapper}>
+          <View style={styles.radioBtn}>
+            {isSelected === item.id ?
+              <View style={styles.radioBg}></View> : null
+            }
+          </View>
+          <Text style={styles.radioBtnText}>{item.name}</Text>
+        </View>
+      </TouchableOpacity>
+      }
+      />
+      
+      
       {/* loader */}
       <ActivityIndicator size={200} color="red" animating={false}></ActivityIndicator>
     </View>
