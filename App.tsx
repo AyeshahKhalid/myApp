@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView, SectionList, TouchableHighlight, TouchableOpacity, ActivityIndicator, Modal, Pressable } from 'react-native'
+import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView, SectionList, TouchableHighlight, TouchableOpacity, ActivityIndicator, Modal, Pressable, StatusBar } from 'react-native'
 import Animal from './components/Animal';
 import Student from './components/Student';
 
@@ -364,6 +364,7 @@ const MyPressable=()=>{
   return(
     <View style={styles.warn}>
       <Pressable 
+      delayLongPress={5000}
       onPress={()=>console.warn("on click button")}
       onLongPress={()=>console.warn("on long click button")}
       onPressIn={()=>console.warn("on press in button")}
@@ -371,6 +372,8 @@ const MyPressable=()=>{
       >
         <Text style={{fontSize:20}}>Pressable</Text>
       </Pressable>
+      {/* status bar */}
+      <StatusBar backgroundColor="red" barStyle={'light-content'} hidden={true}></StatusBar>
     </View>
   );
 }
