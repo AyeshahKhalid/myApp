@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView, SectionList, TouchableHighlight, TouchableOpacity } from 'react-native'
+import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView, SectionList, TouchableHighlight, TouchableOpacity, ActivityIndicator } from 'react-native'
 import Animal from './components/Animal';
 import Student from './components/Student';
 
@@ -22,7 +22,8 @@ const App = () => {
       {/* <MySectionList/>  */}
       {/* <UseHook/> */}
       {/* <MyFlexBox /> */}
-      <MyTouchableHighlight />
+      {/* <MyTouchableHighlight />*/}
+      <MyTouchableOpacity />
     </View>
   )
 }
@@ -279,23 +280,29 @@ const MyTouchableHighlight = () => {
 const MyTouchableOpacity = () => {
   const [isSelected, setSelected] = useState(1)
   return (
-    <View>
-      <TouchableOpacity onPress={()=>setSelected(1)}>
-        <View>
-          {isSelected === 1 ?
-            <View></View> : null
-          }
+    <View style={styles.main}>
+      <TouchableOpacity onPress={() => setSelected(1)}>
+        <View style={styles.radioBtnWrapper}>
+          <View style={styles.radioBtn}>
+            {isSelected === 1 ?
+              <View style={styles.radioBg}></View> : null
+            }
+          </View>
+          <Text style={styles.radioBtnText}>Radio 1</Text>
         </View>
-        <Text>Radio 1</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=>setSelected(2)}>
-        <View>
-          {isSelected === 2 ?
-            <View></View> : null
-          }
+      <TouchableOpacity onPress={() => setSelected(2)}>
+        <View style={styles.radioBtnWrapper}>
+          <View style={styles.radioBtn}>
+            {isSelected === 2 ?
+              <View style={styles.radioBg}></View> : null
+            }
+          </View>
+          <Text style={styles.radioBtnText}>Radio 2</Text>
         </View>
-        <Text>Radio 1</Text>
       </TouchableOpacity>
+      {/* loader */}
+      <ActivityIndicator size={200} color="red" animating={false}></ActivityIndicator>
     </View>
   );
 }
@@ -335,6 +342,28 @@ const styles = StyleSheet.create({
     elevation: 20,
     shadowColor: "black",
     shadowOpacity: 1
-  }
+  },
+  radioBtnWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  radioBtnText: {
+    fontSize: 20,
+    color:"lightblue"
+  },
+  radioBtn: {
+    borderWidth: 2,
+    margin:10,
+    width: 40,
+    height: 40,
+    borderColor: "lightblue",
+    borderRadius: 20
+  },
+  main: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: "center"
+  },
+  radioBg: { borderRadius: 15, backgroundColor: "lightblue", width: 30, height: 30, margin:3 }
 })
 export default App;
