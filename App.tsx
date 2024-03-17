@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView, SectionList, TouchableHighlight, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView, SectionList, TouchableHighlight, TouchableOpacity, ActivityIndicator, Modal, Pressable } from 'react-native'
 import Animal from './components/Animal';
 import Student from './components/Student';
 
@@ -8,12 +8,12 @@ const App = () => {
   function changeName() {
     setName('namse')
   }
-  const radioBtn=[
-    {id:1,name:"Javascript"},
-    {id:2,name:"React"},
-    {id:3,name:"Angular"},
-    {id:4,name:"Vue"},
-    {id:5,name:"Flutter"},
+  const radioBtn = [
+    { id: 1, name: "Javascript" },
+    { id: 2, name: "React" },
+    { id: 3, name: "Angular" },
+    { id: 4, name: "Vue" },
+    { id: 5, name: "Flutter" },
   ]
   return (
     <View style={{ flex: 1 }}>
@@ -30,7 +30,9 @@ const App = () => {
       {/* <MyFlexBox /> */}
       {/* <MyTouchableHighlight />*/}
       {/* <MyTouchableOpacity /> */}
-      <DynamicRadioBtn radio={radioBtn}/>
+      {/* <DynamicRadioBtn radio={radioBtn}/> */}
+      {/* <MyModal /> */}
+      <MyPressable/>
     </View>
   )
 }
@@ -321,23 +323,49 @@ const DynamicRadioBtn = (props) => {
     <View style={styles.main}>
       <FlatList
         data={props.radio}
-        renderItem={({item})=>
-        <TouchableOpacity onPress={() => setSelected(item.id)}>
-        <View style={styles.radioBtnWrapper}>
-          <View style={styles.radioBtn}>
-            {isSelected === item.id ?
-              <View style={styles.radioBg}></View> : null
-            }
-          </View>
-          <Text style={styles.radioBtnText}>{item.name}</Text>
-        </View>
-      </TouchableOpacity>
-      }
+        renderItem={({ item }) =>
+          <TouchableOpacity onPress={() => setSelected(item.id)}>
+            <View style={styles.radioBtnWrapper}>
+              <View style={styles.radioBtn}>
+                {isSelected === item.id ?
+                  <View style={styles.radioBg}></View> : null
+                }
+              </View>
+              <Text style={styles.radioBtnText}>{item.name}</Text>
+            </View>
+          </TouchableOpacity>
+        }
       />
-      
-      
       {/* loader */}
       <ActivityIndicator size={200} color="red" animating={false}></ActivityIndicator>
+    </View>
+  );
+}
+
+const MyModal = () => {
+  const [showModal,setShowModal]=useState(false)
+  return (
+    <View style={{ flex: 1 }}>
+      <Modal transparent={true} visible={showModal} animationType='slide'>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center",shadowColor:"black",elevation:1 }}>
+          <View style={{ backgroundColor: "skyblue", padding: 40 }}>
+            <Text style={{fontSize:15,padding:10}}>Ramadan Mubarak!</Text>
+            <Button title="close modal" onPress={() => setShowModal(false)}></Button>
+          </View>
+        </View>
+      </Modal>
+      <View style={{ flex: 1, justifyContent: "flex-end" }}>
+        <Button title="open modal" onPress={() => setShowModal(true)}></Button>
+      </View>
+    </View> 
+  );
+}
+const MyPressable=()=>{
+  return(
+    <View>
+      <Pressable>
+        <Text>Pressable</Text>
+      </Pressable>
     </View>
   );
 }
@@ -384,11 +412,11 @@ const styles = StyleSheet.create({
   },
   radioBtnText: {
     fontSize: 20,
-    color:"lightblue"
+    color: "lightblue"
   },
   radioBtn: {
     borderWidth: 2,
-    margin:10,
+    margin: 10,
     width: 40,
     height: 40,
     borderColor: "lightblue",
@@ -399,6 +427,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: "center"
   },
-  radioBg: { borderRadius: 15, backgroundColor: "lightblue", width: 30, height: 30, margin:3 }
+  radioBg: { borderRadius: 15, backgroundColor: "lightblue", width: 30, height: 30, margin: 3 }
 })
 export default App;
