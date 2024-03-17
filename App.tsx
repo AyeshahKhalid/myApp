@@ -362,9 +362,14 @@ const MyModal = () => {
 }
 const MyPressable=()=>{
   return(
-    <View>
-      <Pressable>
-        <Text>Pressable</Text>
+    <View style={styles.warn}>
+      <Pressable 
+      onPress={()=>console.warn("on click button")}
+      onLongPress={()=>console.warn("on long click button")}
+      onPressIn={()=>console.warn("on press in button")}
+      onPressOut={()=>console.warn("on press out button")}
+      >
+        <Text style={{fontSize:20}}>Pressable</Text>
       </Pressable>
     </View>
   );
