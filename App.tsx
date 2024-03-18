@@ -1,8 +1,12 @@
 import React, { Component, useEffect, useState } from 'react';
-import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView, SectionList, TouchableHighlight, TouchableOpacity, ActivityIndicator, Modal, Pressable, StatusBar } from 'react-native'
+import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView, SectionList, TouchableHighlight, TouchableOpacity, ActivityIndicator, Modal, Pressable, StatusBar, Platform } from 'react-native'
 import Animal from './components/Animal';
 import Student from './components/Student';
+import { WebView } from 'react-native-webview';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+const Stack = createNativeStackNavigator();
 const App = () => {
   const [name, setName] = useState("Ayesha");
   function changeName() {
@@ -32,7 +36,9 @@ const App = () => {
       {/* <MyTouchableOpacity /> */}
       {/* <DynamicRadioBtn radio={radioBtn}/> */}
       {/* <MyModal /> */}
-      <MyPressable/>
+      {/* <MyPressable/> */}
+      {/* <MyPlatform/> */}
+      <MyNavigationScreen />
     </View>
   )
 }
@@ -343,13 +349,13 @@ const DynamicRadioBtn = (props) => {
 }
 
 const MyModal = () => {
-  const [showModal,setShowModal]=useState(false)
+  const [showModal, setShowModal] = useState(false)
   return (
     <View style={{ flex: 1 }}>
       <Modal transparent={true} visible={showModal} animationType='slide'>
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center",shadowColor:"black",elevation:1 }}>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", shadowColor: "black", elevation: 1 }}>
           <View style={{ backgroundColor: "skyblue", padding: 40 }}>
-            <Text style={{fontSize:15,padding:10}}>Ramadan Mubarak!</Text>
+            <Text style={{ fontSize: 15, padding: 10 }}>Ramadan Mubarak!</Text>
             <Button title="close modal" onPress={() => setShowModal(false)}></Button>
           </View>
         </View>
@@ -357,24 +363,44 @@ const MyModal = () => {
       <View style={{ flex: 1, justifyContent: "flex-end" }}>
         <Button title="open modal" onPress={() => setShowModal(true)}></Button>
       </View>
-    </View> 
+    </View>
   );
 }
-const MyPressable=()=>{
-  return(
+const MyPressable = () => {
+  return (
     <View style={styles.warn}>
-      <Pressable 
-      delayLongPress={5000}
-      onPress={()=>console.warn("on click button")}
-      onLongPress={()=>console.warn("on long click button")}
-      onPressIn={()=>console.warn("on press in button")}
-      onPressOut={()=>console.warn("on press out button")}
+      <Pressable
+        delayLongPress={5000}
+        onPress={() => console.warn("on click button")}
+        onLongPress={() => console.warn("on long click button")}
+        onPressIn={() => console.warn("on press in button")}
+        onPressOut={() => console.warn("on press out button")}
       >
-        <Text style={{fontSize:20}}>Pressable</Text>
+        <Text style={{ fontSize: 20 }}>Pressable</Text>
       </Pressable>
       {/* status bar */}
-      <StatusBar backgroundColor="red" barStyle={'light-content'} hidden={true}></StatusBar>
+      <StatusBar backgroundColor="red" barStyle={'light-content'} hidden={false}></StatusBar>
     </View>
+  );
+}
+
+const MyPlatform = () => {
+  return (
+    // <WebView source={{uri:'https://www.youtube.com/'}}/>
+    <View>
+      <Text style={styles.platform}>Platform:{Platform.OS}</Text>
+      <Text style={styles.platform}>{JSON.stringify(Platform)}</Text>
+    </View>
+  );
+}
+const MyNavigationScreen = () => {
+  return (
+    //  <View></View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="student" component={Student} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 const styles = StyleSheet.create({
@@ -436,5 +462,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   radioBg: { borderRadius: 15, backgroundColor: "lightblue", width: 30, height: 30, margin: 3 }
+  , platform: {
+    color: Platform.OS == 'android' ? 'blue' : 'orange',
+  }
 })
 export default App;
