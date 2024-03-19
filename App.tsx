@@ -43,7 +43,8 @@ const App = () => {
       {/* <MyPressable/> */}
       {/* <MyPlatform/> */}
       {/* <MyStackNavigationScreen /> */}
-      <MyTabNavigation/>
+      {/* <MyTabNavigation/> */}
+      <API></API>
     </View>
   )
 }
@@ -405,19 +406,19 @@ const Home = (props) => {
     <View style={styles.main}>
       <Text>This is Home screen</Text>
       {/* <Text>Name:{age}</Text> */}
-    
+
     </View>
   );
 }
 const Login = (props) => {
-  const data=[
-    {name:"ayesha",age:20}
+  const data = [
+    { name: "ayesha", age: 20 }
   ]
   return (
     <View style={styles.main}>
-    {/* // Pass data between Screens in Stack Navigation */}
-    <View ><Button title='Go to Home' onPress={() => props.navigation.navigate("Home",data)}></Button></View>
-    <View><Text>This is Login Screen</Text></View>
+      {/* // Pass data between Screens in Stack Navigation */}
+      <View ><Button title='Go to Home' onPress={() => props.navigation.navigate("Home", data)}></Button></View>
+      <View><Text>This is Login Screen</Text></View>
     </View>
   );
 }
@@ -425,21 +426,21 @@ const MyStackNavigationScreen = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-      screenOptions={{
-        headerTintColor: 'white',
-        headerStyle: { backgroundColor: 'green'}, 
-        headerTitleStyle: {fontSize:20}
-      }}
+        screenOptions={{
+          headerTintColor: 'white',
+          headerStyle: { backgroundColor: 'green' },
+          headerTitleStyle: { fontSize: 20 }
+        }}
       >
         {/* style in header and add button in header */}
         <Stack.Screen name="Login" component={Login}
           options={{
             // title: 'Login Page',
-            headerTitle:()=><Button title='left'/>,
-            headerRight:()=><TextInput placeholder='search'/>,
+            headerTitle: () => <Button title='left' />,
+            headerRight: () => <TextInput placeholder='search' />,
             headerTintColor: 'white',
-            headerStyle: { backgroundColor: 'green'}, 
-            headerTitleStyle: {fontSize:20}
+            headerStyle: { backgroundColor: 'green' },
+            headerTitleStyle: { fontSize: 20 }
           }}
         />
         <Stack.Screen name="Home" component={Home} />
@@ -448,16 +449,46 @@ const MyStackNavigationScreen = () => {
     </NavigationContainer>
   );
 }
-const MyTabNavigation=()=>{
-  return(
+const MyTabNavigation = () => {
+  return (
     // <View><Text>hello</Text></View>
     <NavigationContainer>
       <Tab.Navigator>
-      <Tab.Screen name="Login" component={Login}></Tab.Screen>
+        <Tab.Screen name="Login" component={Login}></Tab.Screen>
         <Tab.Screen name="Home" component={Home}></Tab.Screen>
-       
+
       </Tab.Navigator>
     </NavigationContainer>
+  );
+}
+//API call
+
+const API = () => {
+  const [data, setData] = useState(undefined)
+  const getApiData = async () => {
+    const url = "https://jsonplaceholder.typicode.com/posts/1"
+    let result = await fetch(url);
+    result = await result.json()
+    
+    setData(result)
+    // console.warn(data) 
+    
+  }
+  useEffect(() => {
+    getApiData();
+  }, [])
+
+  return (
+    <View>
+      {data ?
+      <View>
+     <Text>{data.id}</Text>
+      <Text>{data.userId}</Text>
+      <Text>{data.title}</Text>
+      <Text>{data.body}</Text>
+      </View>: null
+      }
+    </View>
   );
 }
 const styles = StyleSheet.create({
