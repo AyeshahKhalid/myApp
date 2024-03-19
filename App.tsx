@@ -384,22 +384,44 @@ const MyPressable = () => {
   );
 }
 
-const MyPlatform = (props) => {
+const MyPlatform = () => {
   return (
     // <WebView source={{uri:'https://www.youtube.com/'}}/>
     <View>
       <Text style={styles.platform}>Platform:{Platform.OS}</Text>
       <Text style={styles.platform}>{JSON.stringify(Platform)}</Text>
-      <Button title='go to pressable component' onPress={()=>props.navigation.navigate("student")}></Button>
     </View>
+  );
+}
+const Home = () => {
+  return (
+    <View style={styles.main}><Text>This is Home screen</Text></View>
+  );
+}
+const Login = (props) => {
+  return (
+    <View style={styles.main}><Button title='Go to Home' onPress={() => props.navigation.navigate("Home")}></Button></View>
   );
 }
 const MyNavigationScreen = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="platform" component={MyPlatform} />
-        <Stack.Screen name="student" component={MyPressable} />
+      <Stack.Navigator
+      screenOptions={{
+        headerTintColor: 'white',
+        headerStyle: { backgroundColor: 'green'}, 
+        headerTitleStyle: {fontSize:20}
+      }}
+      >
+        <Stack.Screen name="Login" component={Login}
+          options={{
+            title: 'Login Page',
+            headerTintColor: 'white',
+            headerStyle: { backgroundColor: 'green'}, 
+            headerTitleStyle: {fontSize:20}
+          }}
+        />
+        <Stack.Screen name="Home" component={Home} />
 
       </Stack.Navigator>
     </NavigationContainer>
