@@ -393,14 +393,24 @@ const MyPlatform = () => {
     </View>
   );
 }
-const Home = () => {
+const Home = (props) => {
+  console.warn(props.route.params[0])
+  const {name,age}=props.route.params[0]
   return (
-    <View style={styles.main}><Text>This is Home screen</Text></View>
+    <View style={styles.main}>
+      <Text>This is Home screen</Text>
+      <Text>Name: {name}</Text>
+      <Text>Age: {age}</Text>
+    
+    </View>
   );
 }
 const Login = (props) => {
+  const data=[
+    {name:"ayesha",age:20}
+  ]
   return (
-    <View style={styles.main}><Button title='Go to Home' onPress={() => props.navigation.navigate("Home")}></Button></View>
+    <View style={styles.main}><Button title='Go to Home' onPress={() => props.navigation.navigate("Home",data)}></Button></View>
   );
 }
 const MyNavigationScreen = () => {
@@ -413,9 +423,9 @@ const MyNavigationScreen = () => {
         headerTitleStyle: {fontSize:20}
       }}
       >
+        {/* style in header and add button in header */}
         <Stack.Screen name="Login" component={Login}
           options={{
-
             // title: 'Login Page',
             headerTitle:()=><Button title='left'/>,
             headerRight:()=><TextInput placeholder='search'/>,
