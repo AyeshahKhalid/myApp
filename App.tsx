@@ -5,8 +5,10 @@ import Student from './components/Student';
 import { WebView } from 'react-native-webview';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 const App = () => {
   const [name, setName] = useState("Ayesha");
   function changeName() {
@@ -38,7 +40,8 @@ const App = () => {
       {/* <MyModal /> */}
       {/* <MyPressable/> */}
       {/* <MyPlatform/> */}
-      <MyNavigationScreen />
+      {/* <MyStackNavigationScreen /> */}
+      <MyTabNavigation/>
     </View>
   )
 }
@@ -410,10 +413,14 @@ const Login = (props) => {
     {name:"ayesha",age:20}
   ]
   return (
-    <View style={styles.main}><Button title='Go to Home' onPress={() => props.navigation.navigate("Home",data)}></Button></View>
+    <View style={styles.main}>
+    {/* // Pass data between Screens in Stack Navigation */}
+    <View ><Button title='Go to Home' onPress={() => props.navigation.navigate("Home",data)}></Button></View>
+    <View><Text>This is Login Screen</Text></View>
+    </View>
   );
 }
-const MyNavigationScreen = () => {
+const MyStackNavigationScreen = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -437,6 +444,18 @@ const MyNavigationScreen = () => {
         <Stack.Screen name="Home" component={Home} />
 
       </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+const MyTabNavigation=()=>{
+  return(
+    // <View><Text>hello</Text></View>
+    <NavigationContainer>
+      <Tab.Navigator>
+      <Tab.Screen name="Login" component={Login}></Tab.Screen>
+        <Tab.Screen name="Home" component={Home}></Tab.Screen>
+       
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
