@@ -6,9 +6,11 @@ import { WebView } from 'react-native-webview';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+// const Tab = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 const App = () => {
   const [name, setName] = useState("Ayesha");
   function changeName() {
@@ -397,13 +399,12 @@ const MyPlatform = () => {
   );
 }
 const Home = (props) => {
-  console.warn(props.route.params[0])
-  const {name,age}=props.route.params[0]
+  // console.warn(props.route.params[0])
+  // const {name,age}=props.route.params[0]
   return (
     <View style={styles.main}>
       <Text>This is Home screen</Text>
-      <Text>Name: {name}</Text>
-      <Text>Age: {age}</Text>
+      {/* <Text>Name:{age}</Text> */}
     
     </View>
   );
