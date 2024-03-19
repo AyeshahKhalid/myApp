@@ -384,21 +384,23 @@ const MyPressable = () => {
   );
 }
 
-const MyPlatform = () => {
+const MyPlatform = (props) => {
   return (
     // <WebView source={{uri:'https://www.youtube.com/'}}/>
     <View>
       <Text style={styles.platform}>Platform:{Platform.OS}</Text>
       <Text style={styles.platform}>{JSON.stringify(Platform)}</Text>
+      <Button title='go to pressable component' onPress={()=>props.navigation.navigate("student")}></Button>
     </View>
   );
 }
 const MyNavigationScreen = () => {
   return (
-    //  <View></View>
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="student" component={Student} />
+        <Stack.Screen name="platform" component={MyPlatform} />
+        <Stack.Screen name="student" component={MyPressable} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
