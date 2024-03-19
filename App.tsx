@@ -415,7 +415,10 @@ const MyNavigationScreen = () => {
       >
         <Stack.Screen name="Login" component={Login}
           options={{
-            title: 'Login Page',
+
+            // title: 'Login Page',
+            headerTitle:()=><Button title='left'/>,
+            headerRight:()=><TextInput placeholder='search'/>,
             headerTintColor: 'white',
             headerStyle: { backgroundColor: 'green'}, 
             headerTitleStyle: {fontSize:20}
