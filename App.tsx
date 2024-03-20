@@ -45,7 +45,7 @@ const App = () => {
       {/* <MyStackNavigationScreen /> */}
       {/* <MyTabNavigation/> */}
       {/* <API></API> */}
-      <JsonServerApi/>
+      <JsonServerApi />
     </View>
   )
 }
@@ -501,20 +501,20 @@ const API = () => {
         </View> : null
       }
       {
-        info?
-        <FlatList
-        data={info}
-        renderItem={({item})=>
-        <View style={styles.card}>
-        <Text>{item.id}</Text>
-        <Text>{item.userId}</Text>
-        <Text>{item.title}</Text>
-        <Text>{item.body}</Text>
-      </View>
-      }
-      keyExtractor={item=>item.id}
-        />
-        :null
+        info ?
+          <FlatList
+            data={info}
+            renderItem={({ item }) =>
+              <View style={styles.card}>
+                <Text>{item.id}</Text>
+                <Text>{item.userId}</Text>
+                <Text>{item.title}</Text>
+                <Text>{item.body}</Text>
+              </View>
+            }
+            keyExtractor={item => item.id}
+          />
+          : null
       }
       <ScrollView>
         {
@@ -533,35 +533,53 @@ const API = () => {
     </View>
   );
 }
-const JsonServerApi=()=>{
-  const[getData,setgetDate]=useState();
-  const getApiData=async ()=>{
-    const url="http://192.168.100.10:3000/users";
+const JsonServerApi = () => {
+  const [getData, setgetDate] = useState();
+  const getApiData = async () => {
+    const url = "http://192.168.100.10:3000/users";
     let result = await fetch(url);
-    result=await result.json()
+    result = await result.json()
     setgetDate(result);
   }
   useEffect(()=>{
     getApiData();
-  },[])
-  return(
+  },[getData])
+
+  // #52 Post api in React-native
+  const setApiData=async ()=>{
+    const newData={
+      name:"sana",
+      age:12,
+      email:"sana@gmail.com"
+    }
+    const url = "http://192.168.100.10:3000/users";
+    let result = await fetch(url,{
+      method:"Post",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(newData)
+    });
+    result=await result.json()
+   
+  }
+  return (
     <View>
-    {  
-      getData?
-      <FlatList
-      data={getData}
-      renderItem={({item})=>
-      <View style={styles.card}>
-      <Text>{item.id}</Text>
-      <Text>{item.name}</Text>
-      <Text>{item.age}</Text>
-      <Text>{item.email}</Text>
-    </View>
-    }
-    keyExtractor={item=>item.id}
-      />
-      :null
-    }
+      <Button title='call api' onPress={setApiData}></Button>
+      {
+        getData ?
+          <FlatList
+            data={getData}
+            renderItem={({ item }) =>
+              <View style={styles.card}>
+                <Text>{item.id}</Text>
+                <Text>{item.name}</Text>
+                <Text>{item.age}</Text>
+                <Text>{item.email}</Text>
+              </View>
+            }
+            keyExtractor={item => item.id}
+          />
+          : null
+      }
     </View>
   );
 }
