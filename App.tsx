@@ -465,29 +465,70 @@ const MyTabNavigation = () => {
 
 const API = () => {
   const [data, setData] = useState(undefined)
-  const getApiData = async () => {
+  const [info, setInfo] = useState([])
+  const getApiDataById = async () => {
     const url = "https://jsonplaceholder.typicode.com/posts/1"
+
     let result = await fetch(url);
     result = await result.json()
-    
+
     setData(result)
     // console.warn(data) 
-    
+
   }
+
+  const getApiData = async () => {
+    const url = "https://jsonplaceholder.typicode.com/posts"
+    let result = await fetch(url)
+    result = await result.json()
+    setInfo(result)
+  }
+
   useEffect(() => {
+    getApiDataById();
     getApiData();
   }, [])
 
   return (
     <View>
       {data ?
-      <View>
-     <Text>{data.id}</Text>
-      <Text>{data.userId}</Text>
-      <Text>{data.title}</Text>
-      <Text>{data.body}</Text>
-      </View>: null
+        <View>
+          <Text>{data.id}</Text>
+          <Text>{data.userId}</Text>
+          <Text>{data.title}</Text>
+          <Text>{data.body}</Text>
+        </View> : null
       }
+      {
+        info?
+        <FlatList
+        data={info}
+        renderItem={({item})=>
+        <View style={styles.card}>
+        <Text>{item.id}</Text>
+        <Text>{item.userId}</Text>
+        <Text>{item.title}</Text>
+        <Text>{item.body}</Text>
+      </View>
+      }
+      keyExtractor={item=>item.id}
+        />
+        :null
+      }
+      <ScrollView>
+        {
+          info ?
+            info.map((data) =>
+              <View style={styles.card}>
+                <Text>{data.id}</Text>
+                <Text>{data.userId}</Text>
+                <Text>{data.title}</Text>
+                <Text>{data.body}</Text>
+              </View>
+            )
+            : null
+        }
+      </ScrollView>
     </View>
   );
 }
@@ -552,6 +593,13 @@ const styles = StyleSheet.create({
   radioBg: { borderRadius: 15, backgroundColor: "lightblue", width: 30, height: 30, margin: 3 }
   , platform: {
     color: Platform.OS == 'android' ? 'blue' : 'orange',
+  },
+  card: {
+    borderWidth: 1,
+
+    borderRadius: 20,
+    margin: 10,
+    padding: 10,
   }
 })
 export default App;
