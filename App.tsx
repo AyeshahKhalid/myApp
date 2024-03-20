@@ -44,7 +44,8 @@ const App = () => {
       {/* <MyPlatform/> */}
       {/* <MyStackNavigationScreen /> */}
       {/* <MyTabNavigation/> */}
-      <API></API>
+      {/* <API></API> */}
+      <JsonServerApi/>
     </View>
   )
 }
@@ -529,6 +530,38 @@ const API = () => {
             : null
         }
       </ScrollView>
+    </View>
+  );
+}
+const JsonServerApi=()=>{
+  const[getData,setgetDate]=useState();
+  const getApiData=async ()=>{
+    const url="http://192.168.100.10:3000/users";
+    let result = await fetch(url);
+    result=await result.json()
+    setgetDate(result);
+  }
+  useEffect(()=>{
+    getApiData();
+  },[])
+  return(
+    <View>
+    {  
+      getData?
+      <FlatList
+      data={getData}
+      renderItem={({item})=>
+      <View style={styles.card}>
+      <Text>{item.id}</Text>
+      <Text>{item.name}</Text>
+      <Text>{item.age}</Text>
+      <Text>{item.email}</Text>
+    </View>
+    }
+    keyExtractor={item=>item.id}
+      />
+      :null
+    }
     </View>
   );
 }
