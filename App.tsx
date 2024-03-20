@@ -535,6 +535,10 @@ const API = () => {
 }
 const JsonServerApi = () => {
   const [getData, setgetDate] = useState();
+  // const [userData,setUserData]=useState({});
+  const [name,setName]=useState('');
+  const [age,setAge]=useState(null);
+  const [email,setEmail]=useState('');
   const getApiData = async () => {
     const url = "http://192.168.100.10:3000/users";
     let result = await fetch(url);
@@ -552,34 +556,42 @@ const JsonServerApi = () => {
       age:12,
       email:"sana@gmail.com"
     }
+    const inputData={
+      name:name,
+      age:age,
+      email:email,
+    }
     const url = "http://192.168.100.10:3000/users";
     let result = await fetch(url,{
       method:"Post",
       headers:{"Content-Type":"application/json"},
-      body:JSON.stringify(newData)
+      // body:JSON.stringify(newData)
+      body:JSON.stringify(inputData)
     });
     result=await result.json()
    
   }
   return (
     <View>
+      <TextInput style={styles.inputField} placeholder='enter name' onChangeText={(text)=>setName(text)}/>
+      <TextInput style={styles.inputField} placeholder='enter age' onChangeText={(text)=>setAge(text)}/>
+      <TextInput style={styles.inputField} placeholder='enter email id' onChangeText={(text)=>setEmail(text)}/>
       <Button title='call api' onPress={setApiData}></Button>
-      {
-        getData ?
-          <FlatList
-            data={getData}
-            renderItem={({ item }) =>
+      <ScrollView>
+        {
+          getData ?
+            getData.map((data) =>
               <View style={styles.card}>
-                <Text>{item.id}</Text>
-                <Text>{item.name}</Text>
-                <Text>{item.age}</Text>
-                <Text>{item.email}</Text>
+                <Text>{data.id}</Text>
+                <Text>{data.name}</Text>
+                <Text>{data.age}</Text>
+                <Text>{data.email}</Text>
+                
               </View>
-            }
-            keyExtractor={item => item.id}
-          />
-          : null
-      }
+            )
+            : null
+        }
+      </ScrollView>
     </View>
   );
 }
