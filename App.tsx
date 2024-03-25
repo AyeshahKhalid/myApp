@@ -597,9 +597,11 @@ const JsonServerApi = () => {
   );
 }
 const DeleteUpdateUser = () => {
+  const [userId,setUserId]=useState()
   const [name,setName]=useState()
   const [age,setAge]=useState()
   const [user, getUser] = useState()
+  const [showModal,setShowModal]=useState(false)
   const getData = async () => {
     const url = "http://192.168.100.10:3000/users";
     let result = await fetch(url)
@@ -628,6 +630,7 @@ const DeleteUpdateUser = () => {
         age: age
       })
     })
+    setShowModal(false)
   }
   return (
     <View style={{ flex: 1 }}>
@@ -645,21 +648,20 @@ const DeleteUpdateUser = () => {
               <Text>{index + 1}</Text>
               <Text>{item.name}</Text>
               <Text>{item.age}</Text>
-              <Button title="update" onPress={() => updateData(item.id)}></Button>
+              <Button title="update" onPress={() => {setShowModal(true),setUserId(item.id)}}></Button>
               <Button title='delete' onPress={() => deleteData(item.id)}></Button>
             </View>
           ) : null
       }
 
-      <Modal transparent={true} visible={true}>
+      <Modal transparent={true} visible={showModal}>
         <View style={[styles.main,{backgroundColor:"rgba(0,0,0,0.5)"}]}>
           <View style={{backgroundColor:"yellow",width:200}}>
           <TextInput style={[styles.inputField,{backgroundColor:"white"}]} placeholder='Edit Name' onChangeText={(text)=>setName(text)}></TextInput>
           <TextInput style={[styles.inputField,{backgroundColor:"white"}]} placeholder='Edit Age' onChangeText={(text)=>setAge(text)}></TextInput>
           <View style={{flexDirection:"row",margin:15,justifyContent:"flex-end",gap:10}}>
-          {/* onPress={()=>updateData(item.id)} */}
-            <Button title="Save" ></Button>
-            <Button title="Cancel"></Button>
+            <Button title="Save" onPress={()=>updateData(userId)}></Button>
+            <Button title="Cancel" onPress={()=>setShowModal(false)}></Button>
           </View>
           </View>
         </View>
