@@ -597,6 +597,8 @@ const JsonServerApi = () => {
   );
 }
 const DeleteUpdateUser = () => {
+  const [name,setName]=useState()
+  const [age,setAge]=useState()
   const [user, getUser] = useState()
   const getData = async () => {
     const url = "http://192.168.100.10:3000/users";
@@ -622,8 +624,8 @@ const DeleteUpdateUser = () => {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name: "sara",
-        age: 20
+        name: name,
+        age: age
       })
     })
   }
@@ -649,14 +651,16 @@ const DeleteUpdateUser = () => {
           ) : null
       }
 
-      <Modal>
-        <View>
-          <TextInput placeholder='Edit Name'></TextInput>
-          <TextInput placeholder='Edit Age'></TextInput>
-          <View>
-            <Button title="Save"></Button>
+      <Modal transparent={true} visible={true}>
+        <View style={[styles.main,{backgroundColor:"rgba(0,0,0,0.5)"}]}>
+          <View style={{backgroundColor:"yellow",width:200}}>
+          <TextInput style={[styles.inputField,{backgroundColor:"white"}]} placeholder='Edit Name' onChangeText={(text)=>setName(text)}></TextInput>
+          <TextInput style={[styles.inputField,{backgroundColor:"white"}]} placeholder='Edit Age' onChangeText={(text)=>setAge(text)}></TextInput>
+          <View style={{flexDirection:"row",margin:15,justifyContent:"flex-end",gap:10}}>
+          {/* onPress={()=>updateData(item.id)} */}
+            <Button title="Save" ></Button>
             <Button title="Cancel"></Button>
-            <Button></Button>
+          </View>
           </View>
         </View>
       </Modal>
@@ -732,6 +736,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   userRow: {
+    alignItems:"baseline",
     flexDirection: "row",
     borderWidth: 1,
     backgroundColor: "yellow",
