@@ -45,7 +45,8 @@ const App = () => {
       {/* <MyStackNavigationScreen /> */}
       {/* <MyTabNavigation/> */}
       {/* <API></API> */}
-      <JsonServerApi />
+      {/* <JsonServerApi /> */}
+      <DeleteUpdateUser />
     </View>
   )
 }
@@ -536,46 +537,46 @@ const API = () => {
 const JsonServerApi = () => {
   const [getData, setgetDate] = useState();
   // const [userData,setUserData]=useState({});
-  const [name,setName]=useState('');
-  const [age,setAge]=useState(null);
-  const [email,setEmail]=useState('');
+  const [name, setName] = useState('');
+  const [age, setAge] = useState(null);
+  const [email, setEmail] = useState('');
   const getApiData = async () => {
     const url = "http://192.168.100.10:3000/users";
     let result = await fetch(url);
     result = await result.json()
     setgetDate(result);
   }
-  useEffect(()=>{
+  useEffect(() => {
     getApiData();
-  },[getData])
+  }, [getData])
 
   // #52 Post api in React-native
-  const setApiData=async ()=>{
-    const newData={
-      name:"sana",
-      age:12,
-      email:"sana@gmail.com"
+  const setApiData = async () => {
+    const newData = {
+      name: "sana",
+      age: 12,
+      email: "sana@gmail.com"
     }
-    const inputData={
-      name:name,
-      age:age,
-      email:email,
+    const inputData = {
+      name: name,
+      age: age,
+      email: email,
     }
     const url = "http://192.168.100.10:3000/users";
-    let result = await fetch(url,{
-      method:"Post",
-      headers:{"Content-Type":"application/json"},
+    let result = await fetch(url, {
+      method: "Post",
+      headers: { "Content-Type": "application/json" },
       // body:JSON.stringify(newData)
-      body:JSON.stringify(inputData)
+      body: JSON.stringify(inputData)
     });
-    result=await result.json()
-   
+    result = await result.json()
+
   }
   return (
     <View>
-      <TextInput style={styles.inputField} placeholder='enter name' onChangeText={(text)=>setName(text)}/>
-      <TextInput style={styles.inputField} placeholder='enter age' onChangeText={(text)=>setAge(text)}/>
-      <TextInput style={styles.inputField} placeholder='enter email id' onChangeText={(text)=>setEmail(text)}/>
+      <TextInput style={styles.inputField} placeholder='enter name' onChangeText={(text) => setName(text)} />
+      <TextInput style={styles.inputField} placeholder='enter age' onChangeText={(text) => setAge(text)} />
+      <TextInput style={styles.inputField} placeholder='enter email id' onChangeText={(text) => setEmail(text)} />
       <Button title='call api' onPress={setApiData}></Button>
       <ScrollView>
         {
@@ -586,12 +587,79 @@ const JsonServerApi = () => {
                 <Text>{data.name}</Text>
                 <Text>{data.age}</Text>
                 <Text>{data.email}</Text>
-                
+
               </View>
             )
             : null
         }
       </ScrollView>
+    </View>
+  );
+}
+const DeleteUpdateUser = () => {
+  const [user, getUser] = useState()
+  const getData = async () => {
+    const url = "http://192.168.100.10:3000/users";
+    let result = await fetch(url)
+    result = await result.json()
+    getUser(result)
+  }
+  useEffect(() => {
+    getData()
+  }, [user])
+
+  const deleteData = async (id: String) => {
+    const url = `http://192.168.100.10:3000/users/${id}`
+    let result = await fetch(url, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    })
+  }
+
+  const updateData = async (id) => {
+    const url = `http://192.168.100.10:3000/users/${id}`
+    let result = await fetch(url, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: "sara",
+        age: 20
+      })
+    })
+  }
+  return (
+    <View style={{ flex: 1 }}>
+      <View style={styles.userRow}>
+        <Text>S.No.</Text>
+        <Text>Name</Text>
+        <Text>Age</Text>
+        <Text>Update</Text>
+        <Text>Delete</Text>
+      </View>
+      {
+        user ?
+          user.map((item, index) =>
+            <View key={item.id} style={styles.userRow}>
+              <Text>{index + 1}</Text>
+              <Text>{item.name}</Text>
+              <Text>{item.age}</Text>
+              <Button title="update" onPress={() => updateData(item.id)}></Button>
+              <Button title='delete' onPress={() => deleteData(item.id)}></Button>
+            </View>
+          ) : null
+      }
+
+      <Modal>
+        <View>
+          <TextInput placeholder='Edit Name'></TextInput>
+          <TextInput placeholder='Edit Age'></TextInput>
+          <View>
+            <Button title="Save"></Button>
+            <Button title="Cancel"></Button>
+            <Button></Button>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -659,10 +727,16 @@ const styles = StyleSheet.create({
   },
   card: {
     borderWidth: 1,
-
     borderRadius: 20,
     margin: 10,
     padding: 10,
+  },
+  userRow: {
+    flexDirection: "row",
+    borderWidth: 1,
+    backgroundColor: "yellow",
+    justifyContent: "space-around",
+    padding: 10
   }
 })
 export default App;
