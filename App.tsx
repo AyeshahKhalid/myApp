@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -47,7 +48,8 @@ const App = () => {
       {/* <API></API> */}
       {/* <JsonServerApi /> */}
       {/* <DeleteUpdateUser /> */}
-      <MyRef/>
+      {/* <MyRef /> */}
+      <MyAsyncStorage/>
     </View>
   )
 }
@@ -598,11 +600,11 @@ const JsonServerApi = () => {
   );
 }
 const DeleteUpdateUser = () => {
-  const [userId,setUserId]=useState()
-  const [name,setName]=useState()
-  const [age,setAge]=useState()
+  const [userId, setUserId] = useState()
+  const [name, setName] = useState()
+  const [age, setAge] = useState()
   const [user, getUser] = useState([])
-  const [showModal,setShowModal]=useState(false)
+  const [showModal, setShowModal] = useState(false)
   const getData = async () => {
     const url = "http://192.168.100.10:3000/users";
     let result = await fetch(url)
@@ -627,19 +629,19 @@ const DeleteUpdateUser = () => {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-       name,age
+        name, age
       })
     })
     setShowModal(false)
   }
   return (
     <View style={{ flex: 1 }}>
-      <SearchBar/>
+      <SearchBar />
       <View style={styles.userRow}>
-        <Text style={{flex:0.8}}>S.No.</Text>
-        <Text style={{flex:1.5}}>Name</Text>
-        <Text style={{flex:0.5}}>Age</Text>
-        <Text style={{flex:2}}>Action</Text>
+        <Text style={{ flex: 0.8 }}>S.No.</Text>
+        <Text style={{ flex: 1.5 }}>Name</Text>
+        <Text style={{ flex: 0.5 }}>Age</Text>
+        <Text style={{ flex: 2 }}>Action</Text>
       </View>
       {
         user ?
@@ -648,54 +650,77 @@ const DeleteUpdateUser = () => {
               <Text>{index + 1}</Text>
               <Text>{item.name}</Text>
               <Text>{item.age}</Text>
-              <Button title="update" onPress={() => {setShowModal(true),setUserId(item.id)}}></Button>
+              <Button title="update" onPress={() => { setShowModal(true), setUserId(item.id) }}></Button>
               <Button title='delete' onPress={() => deleteData(item.id)}></Button>
             </View>
           ) : null
       }
 
       <Modal transparent={true} visible={showModal}>
-        <View style={[styles.main,{backgroundColor:"rgba(0,0,0,0.5)"}]}>
-          <View style={{backgroundColor:"yellow",width:200}}>
-          <TextInput style={[styles.inputField,{backgroundColor:"white"}]} placeholder='Edit Name' onChangeText={(text)=>setName(text)}></TextInput>
-          <TextInput style={[styles.inputField,{backgroundColor:"white"}]} placeholder='Edit Age' onChangeText={(text)=>setAge(text)}></TextInput>
-          <View style={{flexDirection:"row",margin:15,justifyContent:"flex-end",gap:10}}>
-            <Button title="Save" onPress={()=>updateData(userId)}></Button>
-            <Button title="Cancel" onPress={()=>setShowModal(false)}></Button>
-          </View>
+        <View style={[styles.main, { backgroundColor: "rgba(0,0,0,0.5)" }]}>
+          <View style={{ backgroundColor: "yellow", width: 200 }}>
+            <TextInput style={[styles.inputField, { backgroundColor: "white" }]} placeholder='Edit Name' onChangeText={(text) => setName(text)}></TextInput>
+            <TextInput style={[styles.inputField, { backgroundColor: "white" }]} placeholder='Edit Age' onChangeText={(text) => setAge(text)}></TextInput>
+            <View style={{ flexDirection: "row", margin: 15, justifyContent: "flex-end", gap: 10 }}>
+              <Button title="Save" onPress={() => updateData(userId)}></Button>
+              <Button title="Cancel" onPress={() => setShowModal(false)}></Button>
+            </View>
           </View>
         </View>
       </Modal>
     </View>
   );
 }
-const SearchBar=()=>{
-  const searchUser=async (keyword)=>{
-    const url=`http://192.168.100.10:3000/users?q=${keyword}`;
-    let result=await fetch(url)
-    result=await result.json()
+const SearchBar = () => {
+  const searchUser = async (keyword) => {
+    const url = `http://192.168.100.10:3000/users?q=${keyword}`;
+    let result = await fetch(url)
+    result = await result.json()
   }
-  return(
-    <View><TextInput style={styles.inputField} placeholder={'Enter Search Keyword'} onChangeText={(text)=>searchUser(text)}></TextInput></View>
+  return (
+    <View><TextInput style={styles.inputField} placeholder={'Enter Search Keyword'} onChangeText={(text) => searchUser(text)}></TextInput></View>
   );
 }
 
-const MyRef=()=>{
-  const input=useRef()
-  const updateInput=()=>{
+const MyRef = () => {
+  const input = useRef()
+  const updateInput = () => {
     input.current.focus()
     input.current.setNativeProps({
-      fontSize:24,
-      color:"red"
+      fontSize: 24,
+      color: "red"
     })
   }
-  return(
+  return (
     <View>
       <TextInput ref={input} placeholder='enter me' style={styles.inputField}></TextInput>
       <TextInput placeholder='enter me' style={styles.inputField}></TextInput>
       <Button title='update' onPress={updateInput}></Button>
     </View>
   );
+}
+
+const MyAsyncStorage = () => {
+  const [name, setName] = useState()
+  const setData = async () => {
+    await AsyncStorage.setItem("user", "Zaara")
+  }
+  const getData = async () => {
+    const name = await AsyncStorage.getItem("user")
+    setName(name)
+  }
+  const removeData = async () => {
+    await AsyncStorage.removeItem("user")
+    setName('')
+  }
+  return (
+    <View>
+      <Text style={{ fontSize: 30 }}> My name is {name}</Text>
+      <Button title='set data' onPress={setData}></Button>
+      <Button title='get data' onPress={getData}></Button>
+      <Button title='remove data' onPress={removeData}></Button>
+    </View>
+  )
 }
 const styles = StyleSheet.create({
   textBox: {
@@ -766,7 +791,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   userRow: {
-    alignItems:"baseline",
+    alignItems: "baseline",
     flexDirection: "row",
     borderWidth: 1,
     backgroundColor: "yellow",
