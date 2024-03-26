@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useEffect, useRef, useState } from 'react';
 import { Button, Text, View, StyleSheet, TextInput, FlatList, ScrollView, SectionList, TouchableHighlight, TouchableOpacity, ActivityIndicator, Modal, Pressable, StatusBar, Platform } from 'react-native'
 import Animal from './components/Animal';
 import Student from './components/Student';
@@ -46,7 +46,8 @@ const App = () => {
       {/* <MyTabNavigation/> */}
       {/* <API></API> */}
       {/* <JsonServerApi /> */}
-      <DeleteUpdateUser />
+      {/* <DeleteUpdateUser /> */}
+      <MyRef/>
     </View>
   )
 }
@@ -600,7 +601,7 @@ const DeleteUpdateUser = () => {
   const [userId,setUserId]=useState()
   const [name,setName]=useState()
   const [age,setAge]=useState()
-  const [user, getUser] = useState()
+  const [user, getUser] = useState([])
   const [showModal,setShowModal]=useState(false)
   const getData = async () => {
     const url = "http://192.168.100.10:3000/users";
@@ -616,7 +617,7 @@ const DeleteUpdateUser = () => {
     const url = `http://192.168.100.10:3000/users/${id}`
     let result = await fetch(url, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      // headers: { "Content-Type": "application/json" },
     })
   }
 
@@ -626,20 +627,19 @@ const DeleteUpdateUser = () => {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name: name,
-        age: age
+       name,age
       })
     })
     setShowModal(false)
   }
   return (
     <View style={{ flex: 1 }}>
+      <SearchBar/>
       <View style={styles.userRow}>
-        <Text>S.No.</Text>
-        <Text>Name</Text>
-        <Text>Age</Text>
-        <Text>Update</Text>
-        <Text>Delete</Text>
+        <Text style={{flex:0.8}}>S.No.</Text>
+        <Text style={{flex:1.5}}>Name</Text>
+        <Text style={{flex:0.5}}>Age</Text>
+        <Text style={{flex:2}}>Action</Text>
       </View>
       {
         user ?
@@ -666,6 +666,34 @@ const DeleteUpdateUser = () => {
           </View>
         </View>
       </Modal>
+    </View>
+  );
+}
+const SearchBar=()=>{
+  const searchUser=async (keyword)=>{
+    const url=`http://192.168.100.10:3000/users?q=${keyword}`;
+    let result=await fetch(url)
+    result=await result.json()
+  }
+  return(
+    <View><TextInput style={styles.inputField} placeholder={'Enter Search Keyword'} onChangeText={(text)=>searchUser(text)}></TextInput></View>
+  );
+}
+
+const MyRef=()=>{
+  const input=useRef()
+  const updateInput=()=>{
+    input.current.focus()
+    input.current.setNativeProps({
+      fontSize:24,
+      color:"red"
+    })
+  }
+  return(
+    <View>
+      <TextInput ref={input} placeholder='enter me' style={styles.inputField}></TextInput>
+      <TextInput placeholder='enter me' style={styles.inputField}></TextInput>
+      <Button title='update' onPress={updateInput}></Button>
     </View>
   );
 }
