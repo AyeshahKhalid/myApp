@@ -8,6 +8,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Header from './components/Header';
+import Product from './components/Product';
+
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -49,7 +52,8 @@ const App = () => {
       {/* <JsonServerApi /> */}
       {/* <DeleteUpdateUser /> */}
       {/* <MyRef /> */}
-      <MyAsyncStorage/>
+      {/* <MyAsyncStorage/> */}
+      <MyRedux/>
     </View>
   )
 }
@@ -721,6 +725,45 @@ const MyAsyncStorage = () => {
       <Button title='remove data' onPress={removeData}></Button>
     </View>
   )
+}
+const MyRedux=()=>{
+  const product=[
+    {
+      name:"Oppo 32432",
+      detail:"this is loream ipsum do salt emapvpisu opra the ammubo",
+      image:"https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/uk/advisor/wp-content/uploads/2020/11/phones-switch-apps.jpg",
+    },
+    {
+      name:"Samsung galxy 4645",
+      detail:"this is loream ipsum do salt emapvpisu opra the ammubo",
+      image:"https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/uk/advisor/wp-content/uploads/2020/11/phones-switch-apps.jpg",
+    },
+    {
+      name:"Vivo 904832",
+      detail:"this is loream ipsum do salt emapvpisu opra the ammubo",
+      image:"https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/uk/advisor/wp-content/uploads/2020/11/phones-switch-apps.jpg",
+    },
+    {
+      name:"Redmi 9Casd",
+      detail:"this is loream ipsum do salt emapvpisu opra the ammubo",
+      image:"https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/uk/advisor/wp-content/uploads/2020/11/phones-switch-apps.jpg",
+    },
+    {
+      name:"Real me 543",
+      detail:"this is loream ipsum do salt emapvpisu opra the ammubo",
+      image:"https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/uk/advisor/wp-content/uploads/2020/11/phones-switch-apps.jpg",
+    }
+  ]
+  return(
+    <View>
+      <Header/>
+      {/* {
+        product.map((item)=>
+        <Product product={item}/>
+        )
+      } */}
+    </View>
+  );
 }
 const styles = StyleSheet.create({
   textBox: {
