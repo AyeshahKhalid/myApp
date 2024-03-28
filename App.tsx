@@ -753,15 +753,17 @@ const MyRedux=()=>{
       detail:"this is loream ipsum do salt emapvpisu opra the ammubo",
       image:"https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/uk/advisor/wp-content/uploads/2020/11/phones-switch-apps.jpg",
     }
-  ]
+  ] 
   return(
     <View>
       <Header/>
-      {/* {
+      <ScrollView>
+      {
         product.map((item)=>
         <Product product={item}/>
         )
-      } */}
+      }
+      </ScrollView>
     </View>
   );
 }
