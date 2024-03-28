@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, Button, StyleSheet } from "react-native"
-import { addToCart, removeToCart } from "./redux/action";
-import { UseDispatch, useDispatch, useSelector } from "react-redux";
+import { addToCart, removeFromCart } from "./redux/action";
+import { useDispatch, useSelector } from "react-redux";
 
 const Product = (props) => {
     const item = props.product
@@ -11,16 +11,18 @@ const Product = (props) => {
     const handleAddToCart = (item) => {
         dispatch(addToCart(item))
     }
-    const handleRemoveToCart = (item) => {
-        dispatch(removeToCart(item))
+    const handleRemoveFromCart = (item) => {
+        dispatch(removeFromCart(item.name))
     }
     useEffect(() => {
-        if (cartItems) {
-            cartItems.forEach(element => {
-                if (element.name === item.name) {
-                    setIsAdd(true)
-                }
-            });
+        let result = cartItems.filter((element) => {
+        return  element.name === item.name
+    })
+        if (result.length) {
+            setIsAdd(true)
+        }
+        else {
+            setIsAdd(false)
         }
     }, [cartItems])
     return (
@@ -30,7 +32,7 @@ const Product = (props) => {
             <Image style={{ width: 150, height: 150, marginBottom: 20 }} source={{ uri: item.image }} />
             {
                 isAdd
-                    ? <Button title="remove to cart" onPress={() => handleRemoveToCart(item)}></Button>
+                    ? <Button title="remove from cart" onPress={() => handleRemoveFromCart(item)}></Button>
                     : <Button title="add to cart" onPress={() => handleAddToCart(item)}></Button>
             }
 
