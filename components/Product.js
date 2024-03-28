@@ -11,7 +11,7 @@ const Product =(props)=>{
     }
 
     return(
-        <View style={styles.main}>
+        <View style={styles.main} key={item.name}>
             <Text style={{fontSize:20,fontWeight:"bold"}}>{item.name}</Text>
             <Text style={{fontSize:15}}>{item.detail}</Text>
             <Image style={{width:150, height:150,marginBottom:20}} source={{uri:item.image}}/>
