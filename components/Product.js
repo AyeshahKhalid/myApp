@@ -6,8 +6,8 @@ import { UseDispatch, useDispatch } from "react-redux";
 const Product =(props)=>{
     const item=props.product
     const dispatch=useDispatch();
-    const handleAddToCart=()=>{
-
+    const handleAddToCart=(item)=>{
+        dispatch(addToCart(item))
     }
 
     return(
@@ -15,7 +15,7 @@ const Product =(props)=>{
             <Text style={{fontSize:20,fontWeight:"bold"}}>{item.name}</Text>
             <Text style={{fontSize:15}}>{item.detail}</Text>
             <Image style={{width:150, height:150,marginBottom:20}} source={{uri:item.image}}/>
-            <Button title="add to cart" onPress={()=>dispatch(addToCart(item))}></Button>
+            <Button title="add to cart" onPress={()=>handleAddToCart(item)}></Button>
         </View>
     );
 }
