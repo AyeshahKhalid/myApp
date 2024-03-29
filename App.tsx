@@ -121,6 +121,7 @@ const MyFlatList = () => {
     }
   ]
   return (
+    //check git
     <View>
       <FlatList
 
