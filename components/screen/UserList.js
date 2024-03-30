@@ -3,14 +3,21 @@ import { getUserList } from '../redux/action';
 import { Text, View } from 'react-native';
 import { useEffect } from 'react';
 const UserList = () => {
-    const userList=useSelector((state)=>state.reducer)
+    const userList = useSelector((state) => state.reducer[0].users)
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getUserList());
     }, []);
     console.warn(userList)
     return (
-        <View><Text>helo</Text></View>
+        <View>
+            {
+                userList.length ?
+                    userList.map((item) =>
+                        <Text>{item.firstName}</Text>)
+            :null
+                    }
+        </View>
     )
 }
 export default UserList

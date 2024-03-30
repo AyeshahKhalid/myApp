@@ -7,7 +7,6 @@ function* userList() {
     let result=yield fetch(url)
     result=yield result.json()
     yield put({type:SET_USER_DATA,result}) //yiield will connect put with reducer
-
 }
 
 
