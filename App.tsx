@@ -10,6 +10,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from './components/Header';
 import Product from './components/Product';
+import Gadget from './components/screen/gadget';
 
 
 const Stack = createNativeStackNavigator();
@@ -53,7 +54,8 @@ const App = () => {
       {/* <DeleteUpdateUser /> */}
       {/* <MyRef /> */}
       {/* <MyAsyncStorage/> */}
-      <MyRedux/>
+      {/* <MyRedux/> */}
+      <ReduxNavigation/>
     </View>
   )
 }
@@ -767,6 +769,18 @@ const MyRedux=()=>{
       </ScrollView>
     </View>
   );
+}
+
+
+const ReduxNavigation=()=>{
+  return(
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name='Gadget' component={Gadget}></Stack.Screen>
+        <Stack.Screen name='Home' component={Home}></Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
 }
 const styles = StyleSheet.create({
   textBox: {
