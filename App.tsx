@@ -12,6 +12,7 @@ import Header from './components/Header';
 import Product from './components/Product';
 import Gadget from './components/screen/gadget';
 import {GadgetHome} from './components/screen/home'
+import UserList from './components/screen/UserList';
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -773,7 +774,7 @@ const ReduxNavigation=()=>{
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name='Gadget' component={Gadget}></Stack.Screen>
-        <Stack.Screen name='Home' component={GadgetHome}></Stack.Screen>
+        <Stack.Screen name='Users' component={UserList}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   )

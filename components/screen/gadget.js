@@ -3,7 +3,7 @@ import {View,ScrollView, Button} from 'react-native';
 import Header from "../Header";
 import Product from "../Product";
 
-const Gadget=(props)=>{
+const Gadget=({navigation})=>{
     const product=[
       {
         name:"Oppo 32432",
@@ -33,7 +33,7 @@ const Gadget=(props)=>{
     ] 
     return(
       <View>
-        <Button title="go to home" onPress={()=>props.navigation.navigate("Home")}></Button>
+        <Button title="go to home" onPress={()=>navigation.navigate("Users")}></Button>
         <Header/>
         <ScrollView>
         {
