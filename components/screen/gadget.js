@@ -1,9 +1,9 @@
 import React from "react";
-import {View,ScrollView} from 'react-native';
+import {View,ScrollView, Button} from 'react-native';
 import Header from "../Header";
 import Product from "../Product";
 
-const Gadget=()=>{
+const Gadget=(props)=>{
     const product=[
       {
         name:"Oppo 32432",
@@ -33,6 +33,7 @@ const Gadget=()=>{
     ] 
     return(
       <View>
+        <Button title="go to home" onPress={()=>props.navigation.navigate("Home")}></Button>
         <Header/>
         <ScrollView>
         {

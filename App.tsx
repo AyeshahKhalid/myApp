@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from './components/Header';
 import Product from './components/Product';
 import Gadget from './components/screen/gadget';
-
+import {GadgetHome} from './components/screen/home'
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -473,8 +473,6 @@ const MyTabNavigation = () => {
     </NavigationContainer>
   );
 }
-//API call
-
 const API = () => {
   const [data, setData] = useState(undefined)
   const [info, setInfo] = useState([])
@@ -688,7 +686,6 @@ const SearchBar = () => {
     <View><TextInput style={styles.inputField} placeholder={'Enter Search Keyword'} onChangeText={(text) => searchUser(text)}></TextInput></View>
   );
 }
-
 const MyRef = () => {
   const input = useRef()
   const updateInput = () => {
@@ -706,7 +703,6 @@ const MyRef = () => {
     </View>
   );
 }
-
 const MyAsyncStorage = () => {
   const [name, setName] = useState()
   const setData = async () => {
@@ -777,7 +773,7 @@ const ReduxNavigation=()=>{
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name='Gadget' component={Gadget}></Stack.Screen>
-        <Stack.Screen name='Home' component={Home}></Stack.Screen>
+        <Stack.Screen name='Home' component={GadgetHome}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   )
