@@ -1,8 +1,13 @@
-import { takeEvery } from "redux-saga/effects";
-import { USER_LIST } from "./constant";
+import { takeEvery,put } from "redux-saga/effects";
+import { SET_USER_DATA, USER_LIST } from "./constant";
 
 function* userList() {
-    console.warn("saga function called")
+    // console.warn("saga function called")
+    const url="https://dummyjson.com/user"
+    let result=yield fetch(url)
+    result=yield result.json()
+    yield put({type:SET_USER_DATA,result}) //yiield will connect put with reducer
+
 }
 
 
