@@ -13,6 +13,7 @@ import Product from './components/Product';
 import Gadget from './components/screen/gadget';
 import {GadgetHome} from './components/screen/home'
 import UserList from './components/screen/UserList';
+import MovieApp from './components/MovieApp/MovieApp';
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -56,7 +57,8 @@ const App = () => {
       {/* <MyRef /> */}
       {/* <MyAsyncStorage/> */}
       {/* <MyRedux/> */}
-      <ReduxNavigation/>
+      {/* <ReduxNavigation/> */}
+      <MovieApp/>
     </View>
   )
 }
