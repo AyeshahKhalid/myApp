@@ -9,7 +9,7 @@ const MovieApp = () => {
     return(
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
+                <Stack.Screen name="Home" options={{headerShown:false}} component={HomeScreen}></Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>
     );
