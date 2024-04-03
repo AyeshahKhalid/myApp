@@ -7,10 +7,6 @@ export const font={
     Xlarge:20,
     small:16
 }
-export const color={
-    white:"white"
-}
-
 export const primary={
     text:{color:theme.text},
     background:{color:theme.background},

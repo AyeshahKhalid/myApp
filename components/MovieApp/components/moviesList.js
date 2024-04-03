@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableWithoutFeedback, Dimensions, Image, To
 import Carousel from "react-native-snap-carousel";
 import { primary } from "../theme";
 import { useNavigation } from "@react-navigation/native";
-export const UpcomingMovies = (props) => {
+export const MoviesList = (props) => {
 
     let { title, data } = props
 
@@ -33,6 +33,10 @@ export const UpcomingMovies = (props) => {
                                     moviename.length>=16?moviename.slice(0,16)+"...":moviename
                                     }
                                     </Text>
+                                    <Text  ellipsizeMode="tail"  numberOfLines={3} style={[primary.fontSmall,{marginTop:6,color:"white",marginLeft:5,width:120}]}>
+                                   {moviename}
+                                    </Text>
+                                   
                             </View>
                         </TouchableWithoutFeedback>
                     )
