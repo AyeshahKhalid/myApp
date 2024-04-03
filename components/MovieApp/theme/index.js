@@ -9,7 +9,7 @@ export const font={
 }
 export const primary={
     text:{color:theme.text},
-    background:{color:theme.background},
+    background:{backgroundColor:theme.background},
     fontL:{fontSize:font.large},
     fontXL:{fontSize:font.Xlarge},
     fontSmall:{fontSize:font.small},

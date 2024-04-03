@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableWithoutFeedback, Dimensions, Image, TouchableOpacity, ScrollView } from "react-native";
-import Carousel from "react-native-snap-carousel";
 import { primary } from "../theme";
 import { useNavigation } from "@react-navigation/native";
 export const MoviesList = (props) => {
