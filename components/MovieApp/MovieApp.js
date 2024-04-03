@@ -10,8 +10,8 @@ const MovieApp = (props) => {
     return(
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="Home" options={{headerShown:false}} component={HomeScreen}></Stack.Screen>
                 <Stack.Screen name="Movie" options={{headerShown:false}} component={MovieScreen}></Stack.Screen>
+                <Stack.Screen name="Home" options={{headerShown:false}} component={HomeScreen}></Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>
     );

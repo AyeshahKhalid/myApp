@@ -5,7 +5,8 @@ export const theme={
 export const font={
     large:18,
     Xlarge:20,
-    small:16
+    small:16,
+    Xsmall:14
 }
 export const primary={
     text:{color:theme.text},
@@ -13,4 +14,5 @@ export const primary={
     fontL:{fontSize:font.large},
     fontXL:{fontSize:font.Xlarge},
     fontSmall:{fontSize:font.small},
+    fontXSmall:{fontSize:font.Xsmall},
 }
