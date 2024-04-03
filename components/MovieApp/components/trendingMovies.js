@@ -6,16 +6,16 @@ export const TrendingMovies=(props)=>{
     let data=[...props.data]
     let {width,height}=Dimensions.get("window")
     return(
-        <View>
+        <View style={{marginBottom:12,paddingTop:20}}>
             <Text style={styles.containerText}>Trending</Text>
             <Carousel
                 data={data}
                 renderItem={({item})=>
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={()=>props.navigation.navigate("")}>
                 <Image
                 source={{uri:"https://static.tvtropes.org/pmwiki/pub/images/f321f0be_1937_4f71_87c3_d436edfe37af.png"}}
                 style={{
-                    width:width*0.6,
+                    width:width*0.5,
                     height:height*0.4,
                     borderRadius:20
                     
@@ -27,7 +27,7 @@ export const TrendingMovies=(props)=>{
                 firstItem={1}
                 inactiveSlideOpacity={0.6}
                 sliderWidth={width}
-                itemWidth={width*0.62}
+                itemWidth={width*0.52}
                 slideStyle={{display:'flex',alignItems:"center"}}
             />
         </View>
@@ -37,9 +37,8 @@ export const TrendingMovies=(props)=>{
 const styles=StyleSheet.create({
     containerText:{
         color:"white",
-        marginLeft:4,
-        marginRight:4,
-        marginBottom:5,
+        marginHorizontal:20,
+        marginBottom:20,
         fontSize:20
     }
 })
