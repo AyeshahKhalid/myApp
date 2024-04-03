@@ -4,7 +4,7 @@ import { primary } from "../theme";
 import { useNavigation } from "@react-navigation/native";
 export const MoviesList = (props) => {
 
-    let { title, data } = props
+    let { title, data, hideSeeAll } = props
 
     let { width, height } = Dimensions.get("window")
     let navigation = useNavigation()
@@ -13,9 +13,12 @@ export const MoviesList = (props) => {
         <View style={{ marginBottom: 40, paddingTop: 20 }}>
             <View style={styles.container}>
                 <Text style={styles.containerText}>{title}</Text>
-                <TouchableOpacity>
-                    <Text style={[primary.fontL, primary.text]}>See All</Text>
-                </TouchableOpacity>
+                {
+                    !hideSeeAll && (<TouchableOpacity>
+                        <Text style={[primary.fontL, primary.text]}>See All</Text>
+                    </TouchableOpacity>)
+                }
+
             </View>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 15 }}>
                 {

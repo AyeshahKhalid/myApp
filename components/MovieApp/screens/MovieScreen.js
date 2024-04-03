@@ -19,7 +19,7 @@ const MovieScreen = () => {
     const ios = Platform.OS == 'ios';
     const moviename = "Harry Potter and the Philosopher's Stone";
     const [cast, setCast] = useState([1, 2, 3, 4, 5])
-    const [similarMovies,setsimilarMovies]=useState([1,2,3,4,5])
+    const [similarMovies, setsimilarMovies] = useState([1, 2, 3, 4, 5])
     return (
 
         <ScrollView contentContainerStyle={{ paddingBottom: 20 }} style={styles.container}>
@@ -62,7 +62,7 @@ const MovieScreen = () => {
             </View>
             <Cast cast={cast} navigation={navigation} />
             {/* Similar Movies */}
-        <MoviesList title="Similar Movies" data={similarMovies}/>
+            <MoviesList title="Similar Movies" data={similarMovies} hideSeeAll={true} />
         </ScrollView>
 
     )
