@@ -23,7 +23,7 @@ export const MoviesList = (props) => {
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 15 }}>
                 {
                     data.map((item, index) =>
-                        <TouchableWithoutFeedback key={index} onPress={() => navigation.navigate("Movie", item)}>
+                        <TouchableWithoutFeedback key={index} onPress={() => navigation.push("Movie", item)}>
                             <View style={{ marginRight: 20 }}>
                                 <Image
                                     source={{ uri: "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" }}
