@@ -26,14 +26,34 @@ export default function PersonScreen() {
                 </TouchableOpacity>
             </SafeAreaView>
             <View>
+                <View style={{  alignItems:"center",justifyContent: "center",flexDirection: "row",}}>
                 <View style={styles.imageShadow}>
                     <View style={[styles.image]}>
-                        <Image style={{ width: width * 0.74, height: height * 0.43 }} source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu03H2fzML9ZNRkVYrtbhQBhem22qtqVO21A&s" }} />
+                        <Image style={{ width: width * 0.74, height: height * 0.43, }} source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu03H2fzML9ZNRkVYrtbhQBhem22qtqVO21A&s" }} />
                     </View>
+                </View>
                 </View>
                 <View>
                     <Text style={styles.text}>Keanu Reeves</Text>
-                    <Text style={styles.description}>Keanu Reeves</Text>
+                    <Text style={styles.description}>London, United Kingdom</Text>
+                </View>
+                <View style={styles.statsContainer}>
+                    <View style={styles.stats}>
+                        <Text style={{color:"white"}}>Gender</Text>
+                        <Text style={{color: "rgb(163 163 163)"}}>Male</Text>
+                    </View>
+                    <View style={styles.stats}>
+                        <Text style={{color:"white"}}>Gender</Text>
+                        <Text style={{color: "rgb(163 163 163)"}}>Male</Text>
+                    </View>
+                    <View style={styles.stats}>
+                        <Text style={{color:"white"}}>Gender</Text>
+                        <Text style={{color: "rgb(163 163 163)"}}>Male</Text>
+                    </View>
+                    <View style={[styles.stats,{borderRightWidth:0}]}>
+                        <Text style={{color:"white"}}>Gender</Text>
+                        <Text style={{color: "rgb(163 163 163)"}}>Male</Text>
+                    </View>
                 </View>
             </View>
         </ScrollView>
@@ -46,8 +66,6 @@ const styles = StyleSheet.create({
     },
     header: {
         width: '100%',
-        // zIndex: 20,
-        // position: "absolute",
         flexDirection: "row",
         justifyContent: "space-between"
     },
@@ -55,24 +73,36 @@ const styles = StyleSheet.create({
         marginVertical: 10, fontSize: 29, color: "white", textAlign: "center", fontWeight: "700"
     },
     description: {
-        marginBottom: 10, fontSize: 14, color: "rgb(163 163 163)", textAlign: "center", fontWeight: "400"
+        marginBottom: 10, fontSize: 15, color: "rgb(163 163 163)", textAlign: "center", fontWeight: "400"
     },
     imageShadow: {
-        borderWidth:1,
-        justifyContent: "center",
-        flexDirection: "row",
+        borderRadius:160,
+        elevation:15,
+        paddingHorizontal:15,
         shadowColor: 'white',
-        shadowRadius:40,
-        shadowOffset: { width: 0, height: 5 },
-        shadowOpacity: 1,
     },
     image: {
         overflow: "hidden",
-        marginVertical: 10,
+        marginVertical: 20,
+        width:288,
+        height:288,
         borderWidth: 1,
         borderColor: "rgb(115 115 115)",
-        borderRadius: 144,
-        height: 288,
-        width: 288,
+        borderRadius:9999,
     },
+    statsContainer:{
+        flexDirection:"row",
+        backgroundColor:"rgb(64 64 64)",
+        marginHorizontal:40,
+        borderRadius:30,
+        paddingVertical:10,
+        paddingLeft:10
+    }
+    ,
+    stats:{
+        paddingHorizontal:15,
+        borderRightWidth:1,
+        borderRightColor:"gray",
+        alignItems:"center"
+    }
 })
