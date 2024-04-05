@@ -34,7 +34,7 @@ export default function PersonScreen() {
         if (data && data.cast) {
             setPersonMovies(data.cast)
         }   
-        // setLoading(false)
+       
     }
     
     useEffect(() => {
