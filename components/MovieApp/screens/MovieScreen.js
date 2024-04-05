@@ -9,6 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import LinearGradient from "react-native-linear-gradient";
 import Cast from "../components/cast";
 import { MoviesList } from "../components/moviesList";
+import LoadingScreen from "./LoadingScreen";
 
 const MovieScreen = () => {
     // const {params}=props.route.params //not corret
@@ -20,6 +21,7 @@ const MovieScreen = () => {
     const moviename = "Harry Potter and the Philosopher's Stone";
     const [cast, setCast] = useState([1, 2, 3, 4, 5])
     const [similarMovies, setsimilarMovies] = useState([1, 2, 3, 4, 5])
+    const [loading, setLoading] = useState(false)
     return (
 
         <ScrollView contentContainerStyle={{ paddingBottom: 20 }} style={styles.container}>
@@ -34,14 +36,18 @@ const MovieScreen = () => {
                         <HeartIcon size={35} strokeWidth={2.5} color={isFavourite ? theme.background : "white"}></HeartIcon>
                     </TouchableOpacity>
                 </SafeAreaView>
-                <View>
-                    <Image source={{ uri: "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" }} style={{ width: width, height: height * 0.55 }} />
-                    <LinearGradient colors={['transparent', 'rgba(23,23,23,.9)', 'rgba(23,23,23,1)']}
-                        style={{ width: width, height: height * 0.44, position: "absolute", bottom: 0 }}
-                        start={{ x: 0.5, y: 0 }}
-                        end={{ x: 0.5, y: 1 }}
-                    />
-                </View>
+                {
+                    loading ? <LoadingScreen /> :
+                        <View>
+                            <Image source={{ uri: "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" }} style={{ width: width, height: height * 0.55 }} />
+                            <LinearGradient colors={['transparent', 'rgba(23,23,23,.9)', 'rgba(23,23,23,1)']}
+                                style={{ width: width, height: height * 0.44, position: "absolute", bottom: 0 }}
+                                start={{ x: 0.5, y: 0 }}
+                                end={{ x: 0.5, y: 1 }}
+                            />
+                        </View>
+                }
+
 
                 {/* movie details */}
                 <View style={{ marginTop: -(height * 0.09) }}>

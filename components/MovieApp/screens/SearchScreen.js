@@ -3,12 +3,14 @@ import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { XMarkIcon } from 'react-native-heroicons/outline';
 import { useNavigation } from "@react-navigation/native";
+import LoadingScreen from './LoadingScreen';
 
 export default function SearchScreen() {
     const navigation = useNavigation()
     const [result, setResult] = useState([]);
     const { width, height } = Dimensions.get("window");
     const moviename = "Harry Potter and the Philosopher's Stone";
+    const [loading, setLoading] = useState(false)
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.mainS}>
@@ -22,43 +24,45 @@ export default function SearchScreen() {
                 </TouchableOpacity>
             </View>
             {
-                result.length ?
-                    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 15 }}>
-                        <Text style={styles.result}>Result ({result.length})</Text>
-                        <View style={{ flexDirection: "row", justifyContent: "space-between", flexWrap: "wrap" }}>
-
-                            {
-                                result.map((item, index) => {
-                                    return (
-                                        <TouchableWithoutFeedback
-                                            key={index}
-                                            onPress={() => navigation.push("Movie", item)}
-                                        >
-
-                                            <View>
-                                                <Image
-                                                    style={{ width: width * 0.44, height: height * 0.3, borderRadius: 20 }}
-                                                    source={{ uri: "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" }} />
-                                                <Text ellipsizeMode='tail' numberOfLines={1} style={styles.title}>{moviename}</Text>
-                                            </View>
-                                        </TouchableWithoutFeedback>
-                                    )
-                                })
-
-                            }
-                        </View>
-                    </ScrollView>
+                loading ?
+                    <LoadingScreen />
                     :
-                    <View style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        alignItems: "center",
+                    result.length ?
+                        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 15 }}>
+                            <Text style={styles.result}>Result ({result.length})</Text>
+                            <View style={{ flexDirection: "row", justifyContent: "space-between", flexWrap: "wrap" }}>
+                                {
+                                    result.map((item, index) => {
+                                        return (
+                                            <TouchableWithoutFeedback
+                                                key={index}
+                                                onPress={() => navigation.push("Movie", item)}
+                                            >
+                                                <View>
+                                                    <Image
+                                                        style={{ width: width * 0.44, height: height * 0.3, borderRadius: 20 }}
+                                                        source={{ uri: "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" }} />
+                                                    <Text ellipsizeMode='tail' numberOfLines={1} style={styles.title}>{moviename}</Text>
+                                                </View>
+                                            </TouchableWithoutFeedback>
+                                        )
+                                    })
+
+                                }
+                            </View>
+                        </ScrollView>
+                        :
+                        <View style={{
+                            flex: 1,
+                            justifyContent: "center",
+                            alignItems: "center",
 
 
-                    }}>
-                        <Image style={{ width: width * 0.7, height: height * 0.3 }} source={require("../../MovieApp/assets/images/undraw_raining.png")} />
-                    </View>
+                        }}>
+                            <Image style={{ width: width * 0.7, height: height * 0.3 }} source={require("../../MovieApp/assets/images/undraw_raining.png")} />
+                        </View>
             }
+
 
         </SafeAreaView>
     )

@@ -8,6 +8,7 @@ import { HeartIcon } from "react-native-heroicons/solid"
 import { useNavigation } from "@react-navigation/native";
 import { reducer } from "../../redux/reducer";
 import { MoviesList } from "../components/moviesList";
+import LoadingScreen from "./LoadingScreen";
 
 export default function PersonScreen() {
     const { width, height } = Dimensions.get('window')
@@ -15,6 +16,7 @@ export default function PersonScreen() {
     const navigation = useNavigation()
     const [isFavourite, toggleFavourite] = useState(false)
     const [personMovies,setPersonMovies]=useState([1,2,3,4,5])
+    const [loading, setLoading] = useState(false)
     return (
         <ScrollView contentContainerStyle={{ paddingBottom: 20 }} style={styles.container}>
 
@@ -27,7 +29,9 @@ export default function PersonScreen() {
                     <HeartIcon size={35} strokeWidth={2.5} color={isFavourite ? "red" : "white"}></HeartIcon>
                 </TouchableOpacity>
             </SafeAreaView>
-            <View>
+            {
+                loading?<LoadingScreen/>:
+                <View>
                 <View style={{ alignItems: "center", justifyContent: "center", flexDirection: "row", }}>
                     <View style={styles.imageShadow}>
                         <View style={[styles.image]}>
@@ -64,6 +68,8 @@ export default function PersonScreen() {
                 </View>
                 <MoviesList title="Movies" hideSeeAll={true} data={personMovies}/>
             </View>
+            }
+           
         </ScrollView>
     )
 }
