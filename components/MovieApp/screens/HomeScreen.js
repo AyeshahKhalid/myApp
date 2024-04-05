@@ -43,7 +43,7 @@ const HomeScreen = () => {
         <View style={styles.container}>
             {/* search bar and logos */}
             <SafeAreaView style={{ marginBottom: ios ? 2 : 10 }}>
-                <StatusBar barStyle={'light-content'} />
+                <StatusBar barStyle={'light-content'} backgroundColor="transparent" translucent/>
 
                 <View style={styles.header}>
                     <Bars3CenterLeftIcon size={30} strokeWidth={2} color="white" />

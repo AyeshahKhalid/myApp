@@ -20,7 +20,7 @@ const MovieScreen = () => {
     const navigation = useNavigation()
     const ios = Platform.OS == 'ios';
     const moviename = "Harry Potter and the Philosopher's Stone";
-    const [cast, setCast] = useState([1, 2, 3, 4])
+    const [cast, setCast] = useState([])
     const [similarMovies, setSimilarMovies] = useState([])
     const [loading, setLoading] = useState(false)
     const [movie, setMovie] = useState({})
@@ -36,15 +36,15 @@ const MovieScreen = () => {
         const data = await fetchMovieCredits(id)
         if (data && data.cast) {
             setCast(data.cast)
-        }
-        setLoading(false)
+        }   
+        // setLoading(false)
     }
     const getSimilarMovies = async (id) => {
         const data = await fetchSimilarMovies(id)
         if (data && data.results) {
             setSimilarMovies(data.results)
         }
-        setLoading(false)
+        // setLoading(false)
     }
     useEffect(() => {
         setLoading(true)
@@ -101,17 +101,17 @@ const MovieScreen = () => {
                         })
                     }
 
-                    <Text style={styles.text}>Thrill • </Text>
-                    <Text style={styles.text}>Comedy</Text>
+                    {/* <Text style={styles.text}>Thrill • </Text>
+                    <Text style={styles.text}>Comedy</Text> */}
                 </View>
                 {/* description */}
                 <Text style={[styles.text, { paddingHorizontal: 20, textAlign: "justify" }]}>
                     {movie?.overview}
                 </Text>
             </View>
-            <Cast cast={cast} navigation={navigation} />
+            {cast.length>0 &&<Cast cast={cast} navigation={navigation} />}
             {/* Similar Movies */}
-            <MoviesList title="Similar Movies" data={similarMovies} hideSeeAll={true} />
+            {similarMovies.length>0 &&<MoviesList title="Similar Movies" data={similarMovies} hideSeeAll={true} />}
         </ScrollView >
 
     )

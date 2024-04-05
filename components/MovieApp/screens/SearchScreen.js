@@ -1,9 +1,11 @@
 import { View, Image, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Dimensions } from 'react-native'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { XMarkIcon } from 'react-native-heroicons/outline';
 import { useNavigation } from "@react-navigation/native";
 import LoadingScreen from './LoadingScreen';
+import { fallbackMoviePoster, image185, searchMovies } from '../api/moviedb';
+import {debounce} from 'lodash'
 
 export default function SearchScreen() {
     const navigation = useNavigation()
@@ -11,10 +13,29 @@ export default function SearchScreen() {
     const { width, height } = Dimensions.get("window");
     const moviename = "Harry Potter and the Philosopher's Stone";
     const [loading, setLoading] = useState(false)
+    const handleSearch=(text)=>{
+        if(text&&text.length>2){
+            setLoading(true)
+            searchMovies({
+                query:text,include_adult:"false",language:'en-US',page:'1'
+            }).then(data=>{
+                setLoading(false)
+                if(data&&data.results){
+                    setResult(data.results)
+                }
+            })
+        }
+        else{
+            setLoading(false)
+            setResult([])
+        }
+    }
+    const handleTextDebounce=useCallback(debounce(handleSearch,400),[])
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.mainS}>
                 <TextInput
+                    onChangeText={handleTextDebounce}
                     placeholder='Search Movie'
                     placeholderTextColor={"lightgray"}
                     style={styles.input}
@@ -41,8 +62,8 @@ export default function SearchScreen() {
                                                 <View>
                                                     <Image
                                                         style={{ width: width * 0.44, height: height * 0.3, borderRadius: 20 }}
-                                                        source={{ uri: "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" }} />
-                                                    <Text ellipsizeMode='tail' numberOfLines={1} style={styles.title}>{moviename}</Text>
+                                                        source={{ uri: image185(item?.poster_path)||fallbackMoviePoster }} />
+                                                    <Text ellipsizeMode='tail' numberOfLines={1} style={styles.title}>{item?.title}</Text>
                                                 </View>
                                             </TouchableWithoutFeedback>
                                         )
@@ -93,7 +114,7 @@ const styles = StyleSheet.create({
     },
     result: {
         color: "white",
-        marginBottom: 10,
+        marginBottom: 20,
         fontSize: 16
     },
     title: {

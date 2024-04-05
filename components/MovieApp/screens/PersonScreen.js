@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, StatusBar, Image, TouchableOpacity, Dimensions, Platform } from 'react-native';
 import { useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -9,14 +9,39 @@ import { useNavigation } from "@react-navigation/native";
 import { reducer } from "../../redux/reducer";
 import { MoviesList } from "../components/moviesList";
 import LoadingScreen from "./LoadingScreen";
+import { fallbackPersonImage, fetchPersonDetails, fetchPersonMovies, image342 } from "../api/moviedb";
 
 export default function PersonScreen() {
+    const { params: item } = useRoute();
     const { width, height } = Dimensions.get('window')
     const ios = Platform.OS == 'ios';
     const navigation = useNavigation()
     const [isFavourite, toggleFavourite] = useState(false)
-    const [personMovies,setPersonMovies]=useState([1,2,3,4,5])
+    const [person, setPerson] = useState({})
+    const [personMovies, setPersonMovies] = useState([])
     const [loading, setLoading] = useState(false)
+
+    const getPersonDetails = async (id) => {
+        const data = await fetchPersonDetails(id)
+        if (data) {
+            setPerson(data)
+        }
+        // console.warn(data)
+        setLoading(false)
+    }
+    const getPersonMovies = async (id) => {
+        const data = await fetchPersonMovies(id)
+        if (data && data.cast) {
+            setPersonMovies(data.cast)
+        }   
+        // setLoading(false)
+    }
+    
+    useEffect(() => {
+        getPersonDetails(item.id);
+        getPersonMovies(item.id);
+        setLoading(true)
+    },[item])
     return (
         <ScrollView contentContainerStyle={{ paddingBottom: 20 }} style={styles.container}>
 
@@ -30,46 +55,49 @@ export default function PersonScreen() {
                 </TouchableOpacity>
             </SafeAreaView>
             {
-                loading?<LoadingScreen/>:
-                <View>
-                <View style={{ alignItems: "center", justifyContent: "center", flexDirection: "row", }}>
-                    <View style={styles.imageShadow}>
-                        <View style={[styles.image]}>
-                            <Image style={{ width: width * 0.74, height: height * 0.43, }} source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu03H2fzML9ZNRkVYrtbhQBhem22qtqVO21A&s" }} />
+                loading ? <LoadingScreen /> :
+                    <View>
+                        <View style={{ alignItems: "center", justifyContent: "center", flexDirection: "row", }}>
+                            <View style={styles.imageShadow}>
+                                <View style={[styles.image]}>
+                                    <Image style={{ width: width * 0.74, height: height * 0.43, }} 
+                                    source={{ uri: image342(person?.profile_path) || fallbackPersonImage }} />
+                                </View>
+                            </View>
                         </View>
+                        <View>
+                            <Text style={styles.text}>{person?.name}</Text>
+                            <Text style={styles.description}>{person?.place_of_birth}</Text>
+                        </View>
+                        <View style={styles.statsContainer}>
+                            <View style={styles.stats}>
+                                <Text style={{ color: "white" }}>Gender</Text>
+                                <Text style={{ color: "rgb(163 163 163)" }}>{person?.gender==1?"Female":"Male"}</Text>
+                            </View>
+                            <View style={styles.stats}>
+                                <Text style={{ color: "white" }}>Birthday</Text>
+                                <Text style={{ color: "rgb(163 163 163)" }}>{person?.birthday}</Text>
+                            </View>
+                            <View style={styles.stats}>
+                                <Text style={{ color: "white" }}>Known for</Text>
+                                <Text ellipsizeMode="tail" numberOfLines={1} style={{ width: 50, color: "rgb(163 163 163)" }}>{person?.known_for_department}</Text>
+                            </View>
+                            <View style={[styles.stats, { borderRightWidth: 0 }]}>
+                                <Text style={{ color: "white" }}>Popularity</Text>
+                                <Text style={{ color: "rgb(163 163 163)" }}>{person?.popularity?.toFixed(2)} %</Text>
+                            </View>
+                        </View>
+                        {/* Biography */}
+                        <View style={{ marginHorizontal: 15, marginVertical: 30 }}>
+                            <Text style={styles.biography}>Biography</Text>
+                            <Text 
+                            style={[primary.fontXSmall, { color: "rgb(163 163 163)", textAlign: "justify" }]}>
+                               {person?.biography || "N/A"} </Text>
+                        </View>
+                        {personMovies.length>0&&<MoviesList title="Movies" hideSeeAll={true} data={personMovies} />}
                     </View>
-                </View>
-                <View>
-                    <Text style={styles.text}>Keanu Reeves</Text>
-                    <Text style={styles.description}>London, United Kingdom</Text>
-                </View>
-                <View style={styles.statsContainer}>
-                    <View style={styles.stats}>
-                        <Text style={{ color: "white" }}>Gender</Text>
-                        <Text style={{ color: "rgb(163 163 163)" }}>Male</Text>
-                    </View>
-                    <View style={styles.stats}>
-                        <Text style={{ color: "white" }}>Birthday</Text>
-                        <Text style={{ color: "rgb(163 163 163)" }}>1987-01-11</Text>
-                    </View>
-                    <View style={styles.stats}>
-                        <Text style={{ color: "white" }}>Known for</Text>
-                        <Text ellipsizeMode="tail" numberOfLines={1}  style={{ width:50,color: "rgb(163 163 163)" }}>Acting</Text>
-                    </View>
-                    <View style={[styles.stats, { borderRightWidth: 0 }]}>
-                        <Text style={{ color: "white" }}>Popularity</Text>
-                        <Text style={{ color: "rgb(163 163 163)" }}>64.23</Text>
-                    </View>
-                </View>
-                {/* Biography */}
-                <View style={{ marginHorizontal: 15, marginVertical: 30 }}>
-                    <Text style={styles.biography}>Biography</Text>
-                    <Text style={[primary.fontXSmall, { color: "rgb(163 163 163)",textAlign:"justify" }]}>Keanu Charles Reeves is a Canadian actor, musician, and comic book writer. Regarded as one of the most influential and acclaimed actors in modern history, he is known for his versatile performances in numerous genres throughout his career, and is considered a sex symbol in the media.</Text>
-                </View>
-                <MoviesList title="Movies" hideSeeAll={true} data={personMovies}/>
-            </View>
             }
-           
+
         </ScrollView>
     )
 }

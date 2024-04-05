@@ -11,7 +11,7 @@ export const MoviesList = (props) => {
     let navigation = useNavigation()
     let moviename = "harry potter and the philosopher's stone"
     return (
-        <View style={{ marginBottom: 25, paddingTop: 20 }}>
+        <View style={{ marginBottom: 0, paddingTop: 25 }}>
             <View style={styles.container}>
                 <Text style={styles.containerText}>{title}</Text>
                 {
@@ -36,7 +36,7 @@ export const MoviesList = (props) => {
                                         moviename.length >= 16 ? moviename.slice(0, 16) + "..." : moviename
                                     }
                                 </Text> */}
-                                <Text ellipsizeMode="tail" numberOfLines={3} style={[primary.fontSmall, { marginTop: 6, color: "white", marginLeft: 5, width: 120 }]}>
+                                <Text ellipsizeMode="tail" numberOfLines={1} style={[primary.fontSmall, { marginTop: 6, color: "white", marginLeft: 5, width: 120 }]}>
                                     {item.title}
                                 </Text>
 
