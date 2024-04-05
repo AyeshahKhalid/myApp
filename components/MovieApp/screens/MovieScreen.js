@@ -10,7 +10,7 @@ import LinearGradient from "react-native-linear-gradient";
 import Cast from "../components/cast";
 import { MoviesList } from "../components/moviesList";
 import LoadingScreen from "./LoadingScreen";
-import { fetchMovieDetails } from "../api/moviedb";
+import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, image500 } from "../api/moviedb";
 
 const MovieScreen = () => {
     // const {params}=props.route.params //not corret
@@ -27,14 +27,22 @@ const MovieScreen = () => {
 
     const getMovieDetails = async (id) => {
         const data = await fetchMovieDetails(id)
-        if(data){
+        if (data) {
             setMovie(data)
+        }
+        setLoading(false)
+    }
+    const getMovieCredits = async (id) => {
+        const data = await fetchMovieCredits(id)
+        if (data&&data.cast) {
+            setCast(data.cast)
         }
         setLoading(false)
     }
     useEffect(() => {
         setLoading(true)
         getMovieDetails(item.id)
+        getMovieCredits(item.id)
     }, [item])
     return (
 
@@ -53,7 +61,7 @@ const MovieScreen = () => {
                 {
                     loading ? <LoadingScreen /> :
                         <View>
-                            <Image source={{ uri: "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" }} style={{ width: width, height: height * 0.55 }} />
+                            <Image source={{ uri: image500(movie?.poster_path) || fallbackMoviePoster }} style={{ width: width, height: height * 0.55 }} />
                             <LinearGradient colors={['transparent', 'rgba(23,23,23,.9)', 'rgba(23,23,23,1)']}
                                 style={{ width: width, height: height * 0.44, position: "absolute", bottom: 0 }}
                                 start={{ x: 0.5, y: 0 }}
@@ -65,25 +73,38 @@ const MovieScreen = () => {
 
                 {/* movie details */}
                 <View style={{ marginTop: -(height * 0.09) }}>
-                    <Text style={{ fontSize: 28, fontWeight: "bold", color: "white", textAlign: "center", marginBottom: 15 }}>{moviename}</Text>
+                    <Text style={{ fontSize: 28, fontWeight: "bold", color: "white", textAlign: "center", marginBottom: 15 }}>{movie?.title}</Text>
                     {/* status,release date, runtime */}
-                    <Text style={styles.text}>Released • 2023 • 2hr 32min</Text>
+                    {
+                        movie?.id ?
+                            <Text style={styles.text}>{movie?.status} • {movie.release_date?.split('-')[0]} • {movie?.runtime}</Text>
+                            : null
+                    }
+
                 </View>
                 {/* genres */}
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", marginTop: 10 }}>
-                    <Text style={styles.text}>Action •</Text>
+                    {
+                        movie?.genres?.map((genre, index) => {
+                            let showDot = index + 1 != movie.genres.length
+                            return (
+                                <Text key={index} style={styles.text}>{genre?.name}{showDot ? " • " : null}</Text>
+                            )
+                        })
+                    }
+
                     <Text style={styles.text}>Thrill • </Text>
                     <Text style={styles.text}>Comedy</Text>
                 </View>
                 {/* description */}
                 <Text style={[styles.text, { paddingHorizontal: 20, textAlign: "justify" }]}>
-                    Harry Potter, an eleven-year-old orphan, discovers that he is a wizard and is invited to study at Hogwarts. Even as he escapes a dreary life and enters a world of magic, he finds trouble awaiting him.
+                    {movie?.overiew}
                 </Text>
             </View>
             <Cast cast={cast} navigation={navigation} />
             {/* Similar Movies */}
             <MoviesList title="Similar Movies" data={similarMovies} hideSeeAll={true} />
-        </ScrollView>
+        </ScrollView >
 
     )
 }

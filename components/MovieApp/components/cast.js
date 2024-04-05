@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet } from 'react-native'
 import React from 'react'
 import { primary } from '../theme'
+import { fallbackPersonImage, image185 } from '../api/moviedb'
 
 export default function Cast({ cast, navigation }) {
     const characterName = "John Wick"
@@ -10,13 +11,14 @@ export default function Cast({ cast, navigation }) {
             <Text style={[primary.fontL, { color: "white", marginBottom: 5 }]}>Top Cast</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} >
                 {
-                    cast && cast.map((item, index) =>
-                        <TouchableOpacity key={index} onPress={() => navigation.navigate("Person", item)}>
+                    cast && cast.map((person, index) =>
+                        <TouchableOpacity key={index} onPress={() => navigation.navigate("Person", person)}>
                             <View style={styles.image}>
-                                <Image style={{ borderRadius: 35, width: 70, height: 70 }} source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu03H2fzML9ZNRkVYrtbhQBhem22qtqVO21A&s" }} />
+                                <Image style={{ borderRadius: 35, width: 70, height: 70 }}
+                                 source={{ uri:image185(person?.profile_path) || fallbackPersonImage }} />
                             </View>
-                            <Text ellipsizeMode='tail' numberOfLines={1} style={[{ width: 100 }, styles.white]}>{characterName}</Text>
-                            <Text ellipsizeMode='tail' numberOfLines={1} style={[{ width: 100 }, styles.text]}>{personName}</Text>
+                            <Text ellipsizeMode='tail' numberOfLines={1} style={[{ width: 100 }, styles.white]}>{person?.character}</Text>
+                            <Text ellipsizeMode='tail' numberOfLines={1} style={[{ width: 100 }, styles.text]}>{person?.orignal_name}</Text>
                         </TouchableOpacity>
                     )
                 }
