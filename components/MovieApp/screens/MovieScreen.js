@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, StatusBar, Image, TouchableOpacity, Dimensions, Platform } from 'react-native';
 import { useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -10,6 +10,7 @@ import LinearGradient from "react-native-linear-gradient";
 import Cast from "../components/cast";
 import { MoviesList } from "../components/moviesList";
 import LoadingScreen from "./LoadingScreen";
+import { fetchMovieDetails } from "../api/moviedb";
 
 const MovieScreen = () => {
     // const {params}=props.route.params //not corret
@@ -22,6 +23,19 @@ const MovieScreen = () => {
     const [cast, setCast] = useState([1, 2, 3, 4, 5])
     const [similarMovies, setsimilarMovies] = useState([1, 2, 3, 4, 5])
     const [loading, setLoading] = useState(false)
+    const [movie, setMovie] = useState({})
+
+    const getMovieDetails = async (id) => {
+        const data = await fetchMovieDetails(id)
+        if(data){
+            setMovie(data)
+        }
+        setLoading(false)
+    }
+    useEffect(() => {
+        setLoading(true)
+        getMovieDetails(item.id)
+    }, [item])
     return (
 
         <ScrollView contentContainerStyle={{ paddingBottom: 20 }} style={styles.container}>

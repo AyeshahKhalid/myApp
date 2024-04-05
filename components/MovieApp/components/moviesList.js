@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableWithoutFeedback, Dimensions, Image, TouchableOpacity, ScrollView } from "react-native";
 import { primary } from "../theme";
 import { useNavigation } from "@react-navigation/native";
+import { fallbackMoviePoster, image185 } from "../api/moviedb";
 export const MoviesList = (props) => {
 
     let { title, data, hideSeeAll } = props
@@ -10,7 +11,7 @@ export const MoviesList = (props) => {
     let navigation = useNavigation()
     let moviename = "harry potter and the philosopher's stone"
     return (
-        <View style={{ marginBottom: 40, paddingTop: 20 }}>
+        <View style={{ marginBottom: 25, paddingTop: 20 }}>
             <View style={styles.container}>
                 <Text style={styles.containerText}>{title}</Text>
                 {
@@ -26,17 +27,17 @@ export const MoviesList = (props) => {
                         <TouchableWithoutFeedback key={index} onPress={() => navigation.push("Movie", item)}>
                             <View style={{ marginRight: 20 }}>
                                 <Image
-                                    source={{ uri: "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" }}
-                                    style={{ width: width * 0.33, height: height * 0.22, borderRadius: 20 }}
+                                    source={{ uri: image185(item.poster_path) || fallbackMoviePoster }}
+                                    style={{ width: width * 0.33, height: height * 0.25, borderRadius: 20 }}
                                 >
                                 </Image>
-                                <Text style={[primary.fontSmall, { marginTop: 6, color: "white", marginLeft: 5 }]}>
+                                {/* <Text style={[primary.fontSmall, { marginTop: 6, color: "white", marginLeft: 5 }]}>
                                     {
                                         moviename.length >= 16 ? moviename.slice(0, 16) + "..." : moviename
                                     }
-                                </Text>
+                                </Text> */}
                                 <Text ellipsizeMode="tail" numberOfLines={3} style={[primary.fontSmall, { marginTop: 6, color: "white", marginLeft: 5, width: 120 }]}>
-                                    {moviename}
+                                    {item.title}
                                 </Text>
 
                             </View>

@@ -7,23 +7,37 @@ import { TrendingMovies } from "../components/trendingMovies";
 import { MoviesList } from "../components/moviesList";
 import { useNavigation } from "@react-navigation/native";
 import LoadingScreen from "./LoadingScreen";
-import { fetchTrendingMovies } from "../api/moviedb";
+import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from "../api/moviedb";
 const ios = Platform.OS == "ios"
 const HomeScreen = () => {
-    const [trending, setTrending] = useState([1, 2, 3]);
-    const [upcoming, setUpcoming] = useState([1, 2, 3]);
-    const [topRated, settopRated] = useState([1, 2, 3]);
+    const [trending, setTrending] = useState([]);
+    const [upcoming, setUpcoming] = useState([]);
+    const [topRated, setTopRated] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigation = useNavigation()
     const getTrendingMovies = async () => {
         const data = await fetchTrendingMovies()
-        if (data && data.result){
-            setTrending(data)
+        if (data && data.results) {
+            setTrending(data.results)
             setLoading(false)
+        }
+    }
+    const getUpcomingingMovies = async () => {
+        const data = await fetchUpcomingMovies()
+        if (data && data.results) {
+            setUpcoming(data.results)
+        }
+    }
+    const getTopRatedMovies = async () => {
+        const data = await fetchTopRatedMovies()
+        if (data && data.results) {
+            setTopRated(data.results)
         }
     }
     useEffect(() => {
         getTrendingMovies();
+        getUpcomingingMovies();
+        getTopRatedMovies();
     }, []);
     return (
         <View style={styles.container}>
@@ -47,7 +61,7 @@ const HomeScreen = () => {
                     :
                     <ScrollView>
                         {/* trending movies carousel */}
-                        <TrendingMovies data={trending} />
+                        {trending.length>0 && <TrendingMovies data={trending} />}
                         {/* upcoming movies row */}
                         <MoviesList title="Upcoming" data={upcoming} />
                         {/* top rated movies row */}
