@@ -12,13 +12,13 @@ export default function Cast({ cast, navigation }) {
             <ScrollView horizontal showsHorizontalScrollIndicator={false} >
                 {
                     cast && cast.map((person, index) =>
-                        <TouchableOpacity key={index} onPress={() => navigation.navigate("Person", person)}>
+                        <TouchableOpacity style={{paddingRight:12,alignItems:"center",justifyContent:"center"}} key={index} onPress={() => navigation.navigate("Person", person)}>
                             <View style={styles.image}>
                                 <Image style={{ borderRadius: 35, width: 70, height: 70 }}
                                  source={{ uri:image185(person?.profile_path) || fallbackPersonImage }} />
                             </View>
-                            <Text ellipsizeMode='tail' numberOfLines={1} style={[{ width: 100 }, styles.white]}>{person?.character}</Text>
-                            <Text ellipsizeMode='tail' numberOfLines={1} style={[{ width: 100 }, styles.text]}>{person?.orignal_name}</Text>
+                            <Text ellipsizeMode='tail' numberOfLines={1} style={[{ width: 85,textAlign:"center" }, styles.white]}>{person?.character}</Text>
+                            <Text ellipsizeMode='tail' numberOfLines={1} style={[{ width: 85,textAlign:"center" }, styles.text]}>{person?.original_name}</Text>
                         </TouchableOpacity>
                     )
                 }

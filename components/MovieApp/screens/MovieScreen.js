@@ -10,7 +10,7 @@ import LinearGradient from "react-native-linear-gradient";
 import Cast from "../components/cast";
 import { MoviesList } from "../components/moviesList";
 import LoadingScreen from "./LoadingScreen";
-import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, image500 } from "../api/moviedb";
+import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies, image500 } from "../api/moviedb";
 
 const MovieScreen = () => {
     // const {params}=props.route.params //not corret
@@ -20,8 +20,8 @@ const MovieScreen = () => {
     const navigation = useNavigation()
     const ios = Platform.OS == 'ios';
     const moviename = "Harry Potter and the Philosopher's Stone";
-    const [cast, setCast] = useState([1, 2, 3, 4, 5])
-    const [similarMovies, setsimilarMovies] = useState([1, 2, 3, 4, 5])
+    const [cast, setCast] = useState([1, 2, 3, 4])
+    const [similarMovies, setSimilarMovies] = useState([])
     const [loading, setLoading] = useState(false)
     const [movie, setMovie] = useState({})
 
@@ -34,8 +34,15 @@ const MovieScreen = () => {
     }
     const getMovieCredits = async (id) => {
         const data = await fetchMovieCredits(id)
-        if (data&&data.cast) {
+        if (data && data.cast) {
             setCast(data.cast)
+        }
+        setLoading(false)
+    }
+    const getSimilarMovies = async (id) => {
+        const data = await fetchSimilarMovies(id)
+        if (data && data.results) {
+            setSimilarMovies(data.results)
         }
         setLoading(false)
     }
@@ -43,6 +50,7 @@ const MovieScreen = () => {
         setLoading(true)
         getMovieDetails(item.id)
         getMovieCredits(item.id)
+        getSimilarMovies(item.id)
     }, [item])
     return (
 
@@ -98,7 +106,7 @@ const MovieScreen = () => {
                 </View>
                 {/* description */}
                 <Text style={[styles.text, { paddingHorizontal: 20, textAlign: "justify" }]}>
-                    {movie?.overiew}
+                    {movie?.overview}
                 </Text>
             </View>
             <Cast cast={cast} navigation={navigation} />
